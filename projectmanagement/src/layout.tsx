@@ -1,5 +1,4 @@
 import { NavLink, Outlet } from "react-router";
-import footer from "./components/navigation/footer";
 
 const MainLayout = () => {
 
