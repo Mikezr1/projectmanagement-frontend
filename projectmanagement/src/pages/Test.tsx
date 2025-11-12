@@ -1,4 +1,4 @@
-import { useModal } from "../components/ModalContext";
+import { useModal } from "../modals/ModalContext";
 
 export default function Test() {
     const { showModal, hideModal } = useModal();
