@@ -1,15 +1,20 @@
-
-
-
+import { useState } from 'react';
 
 export default function LoginPage() {
     //needs userStates for email and password
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     //also needs the actual login logic
     const handleSubmit = (e) => {
         e.preventDefault();
         //loging thingy here
     }
 
+    const handleSignupSubmit = (e) => {
+        e.preventDefault();
+        //signup thingy here
+    }
+    
     return (
         <div>
             <div>
@@ -35,7 +40,7 @@ export default function LoginPage() {
                     <h1><a href="/resetpassword">Forgot Password?</a></h1>
                 </div>
                 // under here add collapsable sign up?
-
+        
                 <div>
                     //vales need to be changed
                     <h1>Sign up</h1>
