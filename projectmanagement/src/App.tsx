@@ -1,6 +1,6 @@
 import './App.css'
 import LoginPage from "./pages/LoginPage";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 
@@ -10,9 +10,9 @@ function App() {
 
   return (
           <QueryClientProvider client={queryClient}>
-            <Router>
+             <Router>
               <Routes>
-                <Route path="/" element={<LoginPage />} /> 
+                <Route path="/" element={<LoginPage />} />
               </Routes>
             </Router>
           </QueryClientProvider>
@@ -20,3 +20,5 @@ function App() {
 }
 
 export default App
+
+
