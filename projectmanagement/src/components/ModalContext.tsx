@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback} from "react";
-import CustomModal from "../CustomModal.tsx"
+import CustomModal from "./CustomModal.tsx"
 
 const ModalContext = createContext();
 
