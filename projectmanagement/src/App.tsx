@@ -17,9 +17,9 @@ function App() {
       </Routes>
     </Router>
           <QueryClientProvider client={queryClient}>
-            <Router>
+             <Router>
               <Routes>
-                <Route path="/" element={<LoginPage />} /> 
+                <Route path="/" element={<LoginPage />} />
               </Routes>
             </Router>
           </QueryClientProvider>
@@ -27,3 +27,5 @@ function App() {
 }
 
 export default App
+
+
