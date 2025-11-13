@@ -16,13 +16,18 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    /* ✅ Mixed JS/TS support */
+    "allowJs": true,
+    "checkJs": false,
+
+    /* ✅ Wat striktheid versoepelen tijdens migratie */
+    "strict": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+
+    /* Extra: om rode strepen te verminderen bij imports */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
 }
