@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router";
-import Test from "./pages/test";
+import Test from "./pages/Test";
 
 const MainLayout = () => {
 
