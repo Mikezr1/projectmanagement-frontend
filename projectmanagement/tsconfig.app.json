@@ -24,6 +24,7 @@
     "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
+    "noImplicitAny": false, // hierdoor geen "any" warning meer.
 
     /* Extra: om rode strepen te verminderen bij imports */
     "esModuleInterop": true,

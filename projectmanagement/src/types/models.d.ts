@@ -120,6 +120,7 @@ export interface UserUpdateRoleDTO {
     role: Role;
 }
 
+
 export type Status = "CREATED" | "TODO" | "IN_PROGRESS" | "DONE" | "TESTING" | "BUG_FIXES";
 
 export type Role = "PROJECT_LEADER" | "DEVELOPER" | "CUSTOMER";
