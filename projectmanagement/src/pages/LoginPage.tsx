@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAuthStore } from '../components/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 
@@ -75,5 +75,5 @@ export default function LoginPage() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

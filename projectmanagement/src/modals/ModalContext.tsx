@@ -1,10 +1,31 @@
-import { createContext, useContext, useState, useCallback} from "react";
+import { createContext, useState, useCallback } from "react";
+import type { ReactNode } from "react";
 import CustomModal from "./CustomModal.tsx"
 
-const ModalContext = createContext();
+type ModalSize = "small" | "medium" | "large";
+type OverlayStyle = "light" | "dark";
 
-export function ModalProvider( { children }) {
-    const [modal, setModal] = useState(null);
+interface ModalOptions {
+    title?: string;
+    footer?: ReactNode;
+    size?: ModalSize;
+    overlayStyle?: OverlayStyle;
+    context?: ReactNode;
+    isOpen?: boolean;
+}
+
+interface ModalContextValue {
+    showModal: (options?: ModalOptions) => void;
+    hideModal: () => void;
+}
+
+const ModalContext = createContext<ModalContextValue>({
+    showModal: () => {},
+    hideModal: () => {}
+});
+
+export function ModalProvider({ children }: { children: ReactNode }) {
+    const [modal, setModal] = useState<ModalOptions | null>(null);
 
     const showModal = useCallback((options) => {
         setModal({
@@ -36,6 +57,4 @@ export function ModalProvider( { children }) {
     ); 
 }
 
-export function useModal () {
-        return useContext(ModalContext);
-}
+export default ModalContext;
