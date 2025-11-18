@@ -1,4 +1,5 @@
 import React from 'react';
+import type { JSX } from 'react';
 import { createRoot } from 'react-dom/client';
 import * as Modal from 'react-modal';
 
@@ -16,7 +17,7 @@ const customStyles: Modal.Styles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#yourAppElement');
 
-function TestModal(): JSX.Element {
+export function TestModal(): JSX.Element {
   let subtitle: HTMLHeadingElement | null = null;
   const [modalIsOpen, setIsOpen] = React.useState<boolean>(false);
 
