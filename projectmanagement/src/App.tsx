@@ -1,9 +1,10 @@
-import './App.css'
+// import './App.css'
 import LoginPage from "./pages/LoginPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import ProjectListPage from './pages/ProjectListPage';
 import LandingPage from './pages/LandingPage';
+import TaskDetailPage from "./pages/TaskDetailPage";
  
  
 function App() {
@@ -18,7 +19,8 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/projects" element={<ProjectListPage />} />
           <Route path="/home" element={<LandingPage />} />
-          <Route path="/projects" element={<ProjectList />} />
+          <Route path="/task" element={<TaskDetailPage />} />
+          <Route path="/projects/${projectId}/tasks/${taskId}" element={<TaskDetailPage />} />
         </Routes>
       </Router>
     </QueryClientProvider>
