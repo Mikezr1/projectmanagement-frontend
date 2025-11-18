@@ -20,6 +20,7 @@ function App() {
           <Route path="/projects" element={<ProjectListPage />} />
           <Route path="/home" element={<LandingPage />} />
           <Route path="/task" element={<TaskDetailPage />} />
+          <Route path="/projects/${projectId}/tasks/${taskId}" element={<TaskDetailPage />} />
         </Routes>
       </Router>
     </QueryClientProvider>
