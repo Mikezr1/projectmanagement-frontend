@@ -14,7 +14,19 @@ export default function FetchComments() {
 
         return (
             <>
-            
+            {comments?.map(comment=> {
+                <div key={comment.id} className="">
+                    <div>
+                        {/*NAME here */}
+                    </div>
+                    <div>
+                        {/*DESCRIPTION here */}
+                    </div>
+                    <div>
+                        {/*Button here if owner here */}
+                    </div>
+                </div>
+            })}
             </>
         )
 }
