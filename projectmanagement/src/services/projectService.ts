@@ -1,5 +1,10 @@
 import axios from "axios";
-import { API_BASE_PROJECT } from "../components/navigation/constants";
+import { API_BASE_PROJECT } from "../components/constants.ts";
+import type { ProjectSummaryDTO } from "../types/models";
+
+const axiosClient = axios.create({
+    baseURL: API_BASE_PROJECT
+});
 
 const createProject = async (dto) => {
     const response = await axios.post(`${API_BASE_PROJECT}`, dto);
@@ -11,9 +16,14 @@ const getAllProjects = async () => {
     return response.data;
 }
 
+const getProjectsByUserId = async (userId: number) => {
+    const response = await axiosClient.get<ProjectSummaryDTO[]>(`/by-user?userId=${userId}`);
+    return response.data;
+};
+
 const getProject = async (id) => {
     if (!id) {
-        throw new Error("error id doesnt exist");
+        throw new Error("error id doesn't exist");
     }
     const response = await axios.get(`${API_BASE_PROJECT}/${id}`);
     return response.data;
@@ -32,6 +42,7 @@ const deleteProject = async (id) => {
 export default {
     createProject,
     getAllProjects,
+    getProjectsByUserId,
     getProject,
     updateProject,
     deleteProject

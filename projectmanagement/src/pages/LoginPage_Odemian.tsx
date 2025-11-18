@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { login } from "../stores/authStore.tsx";
-import type { UserLoginRequestDTO } from "../types/models";
+// import type { UserLoginRequestDTO } from "../types/models";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import userService from "../services/userService";
-import { setAuthToken } from "../authToken.ts";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("alice@example.com");
@@ -20,7 +18,6 @@ const LoginForm = () => {
             );
             
             login(user);
-            // setAuthToken(token);
             alert("Welcome " + user.firstName + "!");
             navigate("/projects");
         } catch (error) {

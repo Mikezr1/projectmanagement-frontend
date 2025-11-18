@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import ProjectList from './pages/ProjectListPage';
 import LandingPage from './pages/LandingPage';
 import LoginForm from './pages/LoginPage_Odemian';
+import { PrivateRoute } from './PrivateRoute';
  
  
 function App() {
@@ -14,9 +15,14 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
+          {/* Public routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/projects" element={<ProjectList />} />
+
+          {/* Protected routes */}
+          <Route element={<PrivateRoute />}>
+            <Route path="/projects" element={<ProjectList />} />
+          </Route>
         </Routes>
       </Router>
     </QueryClientProvider>

@@ -2,18 +2,19 @@ import { useQuery } from "@tanstack/react-query"
 import type { ProjectSummaryDTO } from "../types/models"
 import projectService from "../services/projectService"
 import { useNavigate } from "react-router-dom"
-import useAuthStore from "../components/useAuthStore"
+import { logout, useAuthStore } from "../stores/authStore"
 
 const ProjectListPage = () => {
+    const { user } = useAuthStore();
     const navigate = useNavigate();
-    const user = useAuthStore((state) => state.user);
     
     const { data: projects, isLoading, isError, error } = useQuery<ProjectSummaryDTO[], Error>({
         queryKey: ['projects', user?.id],
-        queryFn: projectService.getAllProjects,
-    })
+        queryFn: () =>  projectService.getProjectsByUserId(user!.id),
+        enabled: !!user.id
+    });
 
-    if (isLoading) return <div>Loading...</div>
+    if (isLoading) return <div>Loading projects</div>
 
     if (isError) return <div>Error: { error?.message }</div>
 
@@ -21,11 +22,11 @@ const ProjectListPage = () => {
         <div>
             <div>
                 {/* Navbar */}
-                <h1>b</h1>
+                <h1></h1>
             </div>
             <div>
                 {/* Sidebar */}
-                <h1>a</h1>
+                <h1></h1>
             </div>
             <div>
                 {projects?.map(project => (
@@ -40,7 +41,7 @@ const ProjectListPage = () => {
                 ))}
             </div>
             <div>
-                <button type="button" onClick={() => {}}>Logout</button>
+                <button type="button" onClick={() => { logout() }}>Logout</button>
             </div>
         </div>
     )
