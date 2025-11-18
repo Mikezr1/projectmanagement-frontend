@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@odemian/react-store": "^0.0.12"
+  }
+}

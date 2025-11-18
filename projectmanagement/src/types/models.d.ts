@@ -101,6 +101,10 @@ export interface UserLoginRequestDTO {
     password: string;
 }
 
+export interface UserLoginResponseDTO {
+    user: UserSummaryDTO;
+}
+
 export interface UserSummaryDTO {
     id: number;
     firstName: string;
