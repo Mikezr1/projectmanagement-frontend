@@ -29,10 +29,16 @@ const deleteTask = async (id) => {
     return response.data;
 }
 
+const getAllStatuses = async () => {
+  const response = await axios.get(`${API_BASE_TASK}/statuses`);
+  return response.data;
+};
+
 export default {
     createTask,
     getTask,
     getAllTasks,
     updateTask,
-    deleteTask
+    deleteTask,
+    getAllStatuses
 }
