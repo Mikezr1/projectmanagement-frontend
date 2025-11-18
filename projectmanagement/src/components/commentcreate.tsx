@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { CommentCreateDTO } from "../types/models";
 import API_URL from "../services/commentService";
 import useStore from "../components/useStore";
+import commentService from "../services/commentService";
 
 interface CommentCreate {
     setComment: (id: number) => void;
@@ -18,11 +19,7 @@ const CommentCreate = ({ setComment, projectId }: CommentCreate) => {
 
     const createComment = useMutation({
         mutationFn: async (comment: CommentCreateDTO) => {
-            const response = await fetch(`${API_URL}/comments/${projectId}/${user.id}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(comment)
-            })
+            const response = await commentService.createComment(comment);
             if (!response.ok) throw new Error('failed to create comment');
             return response.json();
         },
