@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_PROJECT } from "../components/navigation/constants";
+import { API_BASE_PROJECT } from "../components/constants.ts";
 
 const createProject = async (dto) => {
     const response = await axios.post(`${API_BASE_PROJECT}`, dto);
