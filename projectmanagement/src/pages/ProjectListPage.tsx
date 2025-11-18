@@ -25,15 +25,22 @@ const ProjectListPage = () => {
                 {/* Sidebar */}
                 <h1>a</h1>
             </div>
-            <div>
+            <div className="">
                 {projects?.map(project => (
                     <div key={project.id}>
-                        <b><h2>{project.title}</h2></b>
-                        <ul>
+                        <span 
+                        className=" hover:underline"
+                        //needs task id from usestore
+                        //onClick={() => navigate(`tasks/${task.id}`)}>
+                        onClick={() => navigate(`/projects/${project.id}`)}>
+                            <h2>{project.title}</h2>
+                        </span>
+
+                        {/* <ul>
                             {project.tasks?.map(task => (
                                 <li key={task.id}>{task.title}</li>
                             ))}
-                        </ul>
+                        </ul> */}
                     </div>
                 ))}
             </div>
