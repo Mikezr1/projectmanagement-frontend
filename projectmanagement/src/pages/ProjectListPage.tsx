@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { logout, useAuthStore } from "../stores/authStore"
 
 const ProjectListPage = () => {
-    const { user: currentUser } = useAuthStore();
+    const { user: user } = useAuthStore();
     const navigate = useNavigate();
     
     const { data: projects, isLoading, isError, error } = useQuery<ProjectSummaryDTO[], Error>({
