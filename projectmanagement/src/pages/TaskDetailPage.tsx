@@ -29,16 +29,22 @@ const TaskDetailPage = () => {
                 <div>
                     <div>
                         <h1>{/*file path name here */}</h1>
+                            <h1>{task.project.title}</h1>
+                                <h1>-</h1>
+                            <h1>{task.title}</h1>
                         <div>
                             <div>
                                 {/*task name here */}
+                                {task.title}
                                 {/*role collapse here */}
                             </div>
                             <div>
                                 {/*task owner? here */}
+                                {task.user.firstName}
                             </div>
                             <div>
                                 {/*status here */}
+                                {task.status}
                                 {/*button here here */}
                             </div>
                         </div>
@@ -49,6 +55,7 @@ const TaskDetailPage = () => {
                     <div>
                         <div>{/* TASK DESCRIPTION TITLE */}</div>
                         <div>{/*description here */}</div>
+                        {task.description}
                     </div>
                 </div>
 
