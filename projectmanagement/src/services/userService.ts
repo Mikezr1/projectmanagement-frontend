@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_BASE_USER } from "../components/constants";
-import type { UserLoginResponseDTO } from "../types/models";
+import type { UserLoginResponseDTO, UserSummaryDTO } from "../types/models";
 
 interface UserRegistrationData {
   firstName: string;
@@ -11,7 +11,6 @@ interface UserRegistrationData {
   companyName: string;
 }
 
-// axios instance
 const axiosClient = axios.create({
   baseURL: API_BASE_USER,
 });
@@ -47,12 +46,12 @@ const deleteUser = async (id: number) => {
   return response.data;
 };
 
-const loginUser = async (email: string, password: string) => {
+const loginUser = async (email: string, password: string):Promise<UserSummaryDTO> => {
   const response = await axiosClient.post<UserLoginResponseDTO>("/login", {
     email: email.trim().toLowerCase(),
-    password: password.trim(), // never lowercase passwords!
+    password: password.trim(),
   });
-  return response.data;
+  return response.data.user;
 };
 
 const resetPassword = async (
