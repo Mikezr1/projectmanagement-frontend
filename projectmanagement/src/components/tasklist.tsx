@@ -1,6 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import taskService from "../services/taskService";
 
+interface TasklistProps {
+    projectId: number;
+}
+
 const Tasklist = () => {
 
     const queryClient = useQueryClient();
@@ -45,15 +49,15 @@ const Tasklist = () => {
             <table className="border-2 border-white">
                 <tbody>
                     {sortedTasks?.map((task) => (
-                        <tr key={task.id}>
-                            <th>
+                        <tr className="border-2 px-2 border-white" key={task.id}>
+                            <th className="border-2 px-2 border-white">
                                 <input type="checkbox" />
                             </th>
 
-                            <td>{task.title}</td>
-                            <td>{task.user?.name ?? "No user"}</td>
+                            <td className="border-2 px-2 border-white">{task.title}</td>
+                            <td className="border-2 px-2 border-white">{task.user?.firstName ?? "No user"}</td>
 
-                            <td>
+                            <td className="border-2 px-2 border-white">
                                 <select
                                     value={task.status}
                                     onChange={(e) =>
@@ -68,7 +72,12 @@ const Tasklist = () => {
                                 </select>
                             </td>
 
-                            <td>{task.status}</td>
+                            <td className="p-1">
+                                <span className="m-2 items-center p-1 justify-center w-8 h-8 rounded border-2 border-white">
+                                    {task.status}
+                                </span>
+
+                            </td>
                         </tr>
                     ))}
                 </tbody>

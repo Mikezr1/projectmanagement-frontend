@@ -2,14 +2,19 @@ import { useQuery } from "@tanstack/react-query"
 import type { ProjectSummaryDTO } from "../types/models"
 import projectService from "../services/projectService"
 import { NavLink, useNavigate } from "react-router-dom"
+import useAuthStore from "../components/useAuthStore"
 
 const ProjectListPage = () => {
     const navigate = useNavigate();
+
+    const { user } = useAuthStore();
     
     const { data: projects, isLoading, isError, error } = useQuery<ProjectSummaryDTO[], Error>({
-        queryKey: ['projects'],
-        queryFn: projectService.getAllProjects
-    })
+        queryKey: ['projects', user?.id],
+        queryFn: () =>  projectService.getProjectsByUserId(user!.id),
+        enabled: !!user.id
+    });
+ 
 
     if (isLoading) return <div>Loading...</div>
 

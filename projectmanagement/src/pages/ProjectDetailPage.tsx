@@ -1,0 +1,69 @@
+import { NavLink, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import projectService from "../services/projectService";
+import Tasklist from "../components/tasklist";
+import useAuthStore from "../components/useAuthStore";
+
+const ProjectDetailPage = () => {
+    const { projectId } = useParams();
+
+    const { user } = useAuthStore();
+
+    // Project ophalen
+    const { data: project, isLoading, isError, error } = useQuery<ProjectSummaryDTO, Error>({
+        queryKey: ["project", projectId],
+        queryFn: () => projectService.getProject(projectId),
+        enabled: !!user?.id && !!projectId,
+    });
+
+    if (isLoading) return <p>Loading...</p>;
+    if (isError || !project) return <p>Project not found.</p>;
+
+    return (
+        <div className="w-[1200px] h-full flex flex-col">
+
+            <div className="bg-black border-2 border-white p-4">
+                <h1>Navbar</h1>
+            </div>
+
+            <div className="flex bg-black text-white h-[800px]">
+
+                {/* Sidebar */}
+                <div className="w-1/3 border-2 border-white border-t-0 p-4">
+                    <p className="mb-4">Sidebar</p>
+                    <NavLink to="">home</NavLink>
+                    <NavLink to="">projects</NavLink>
+                    <NavLink to="">tasks</NavLink>
+
+                    <button className="border border-white px-4 py-2 mb-2 hover:bg-white hover:text-black">
+                        Add Project
+                    </button>
+                    <button className="border border-white px-4 py-2 hover:bg-white hover:text-black">
+                        Add Task
+                    </button>
+                </div>
+
+                {/* Main content */}
+                <div className="w-2/3 border-2 border-white border-t-0 border-l-0 p-4">
+
+                    {/* Breadcrumb */}
+                    <div className="text-sm mb-4 text-gray-500 flex items-center gap-2">
+                        <NavLink to="/projects">Projects</NavLink>
+                        <span>{">"}</span>
+                        <span className="text-gray-800 font-semibold">{project.title}</span>
+                    </div>
+
+                    {/* Title */}
+                    <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
+                    
+
+                    {/* Task list komt hier nog */}
+                    <Tasklist projectId={projectId} />
+
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default ProjectDetailPage;
