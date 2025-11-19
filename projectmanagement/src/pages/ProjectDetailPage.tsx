@@ -2,10 +2,12 @@ import { NavLink, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import projectService from "../services/projectService";
 import Tasklist from "../components/tasklist";
-import useAuthStore from "../components/useAuthStore";
+import { useAuthStore } from "../stores/authStore";
+import type { ProjectSummaryDTO } from "../types/models";
 
 const ProjectDetailPage = () => {
-    const { projectId } = useParams();
+    const { projectId } = useParams<{projectId: string}>();
+    const numericProjectId = Number(projectId);
 
     const { user } = useAuthStore();
 
@@ -17,7 +19,7 @@ const ProjectDetailPage = () => {
     });
 
     if (isLoading) return <p>Loading...</p>;
-    if (isError || !project) return <p>Project not found.</p>;
+    if (isError || !project) return <p>Error: {error?.message}</p>;
 
     return (
         <div className="w-[1200px] h-full flex flex-col">
@@ -58,7 +60,7 @@ const ProjectDetailPage = () => {
                     
 
                     {/* Task list komt hier nog */}
-                    <Tasklist projectId={projectId} />
+                    <Tasklist projectId={numericProjectId}/>
 
                 </div>
             </div>
