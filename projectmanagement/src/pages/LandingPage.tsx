@@ -10,7 +10,7 @@ const LandingPage = () => {
                 <div className="flex flex-col align-left py-2 gap-4">
                     <h3 className="text-bold text-2xl text-white">Start managing your projects</h3>
                     <p className="text-sm text-white" >This application will help you manage your projects better then ever before.</p>
-                    <button className="" onClick={() => navigate("/login")}>
+                    <button className="" type="button" onClick={() => navigate("/login")}>
                         Login
                     </button>
                 </div>
