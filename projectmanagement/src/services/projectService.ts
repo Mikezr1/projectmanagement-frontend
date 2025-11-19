@@ -1,6 +1,11 @@
 import axios from "axios";
 import { API_BASE_PROJECT } from "../components/constants.ts";
 import type { ProjectSummaryDTO } from "../types/models";
+
+const axiosClient = axios.create({
+    baseURL: API_BASE_PROJECT
+});
+
  
 const axiosClient = axios.create({
     baseURL: API_BASE_PROJECT
@@ -15,11 +20,13 @@ const getAllProjects = async () => {
     const response = await axios.get(`${API_BASE_PROJECT}`);
     return response.data;
 }
+
  
 const getProjectsByUserId = async (userId: number) => {
     const response = await axiosClient.get<ProjectSummaryDTO[]>(`/by-user?userId=${userId}`);
     return response.data;
 };
+
  
 const getProject = async (id) => {
     if (!id) {

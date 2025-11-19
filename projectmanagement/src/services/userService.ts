@@ -1,5 +1,11 @@
 import axios from "axios";
 import { API_BASE_USER } from "../components/constants";
+// import type { UserLoginRequestDTO } from "../types/models";
+import type { UserLoginResponseDTO } from "../types/models";
+
+const axiosClient = axios.create({
+    baseURL: API_BASE_USER
+});
 
 const createUser = async (dto) => {
     const response = await axios.post(`${API_BASE_USER}`, dto);
@@ -29,13 +35,20 @@ const deleteUser = async (id) => {
     return response.data;
 };
 
-const loginUser = async (dto) => {
-    const response = await axios.post(`${API_BASE_USER}/login`, dto);
+const loginUser = async (email: string, password: string) => {
+    const response = await axiosClient.post<UserLoginResponseDTO>("/login", {
+        email: email.trim().toLowerCase(),
+        password: password.trim().toLowerCase()
+    });
     return response.data;
 };
 
-const resetPassword = async (dto) => {
-    const response = await axios.post(`${API_BASE_USER}/reset-password`, dto);
+const resetPassword = async (email: string, newPassword: string, confirmPassword: string) => {
+    const response = await axiosClient.post(`${API_BASE_USER}/forgot-password`, {
+        email,
+        newPassword,
+        confirmPassword
+    });
     return response.data;
 };
 

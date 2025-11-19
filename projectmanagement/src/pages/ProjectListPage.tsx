@@ -2,9 +2,10 @@ import { useQuery } from "@tanstack/react-query"
 import type { ProjectSummaryDTO } from "../types/models"
 import projectService from "../services/projectService"
 import { NavLink, useNavigate } from "react-router-dom"
-import useAuthStore from "../components/useAuthStore"
+import { logout, useAuthStore } from "../stores/authStore"
 
 const ProjectListPage = () => {
+    const { user } = useAuthStore();
     const navigate = useNavigate();
 
     const { user } = useAuthStore();
@@ -16,7 +17,7 @@ const ProjectListPage = () => {
     });
  
 
-    if (isLoading) return <div>Loading...</div>
+    if (isLoading) return <div>Loading projects</div>
 
     if (isError) return <div>Error: { error?.message }</div>
 
@@ -56,6 +57,9 @@ const ProjectListPage = () => {
                     </div>
                     ))}
                 </div>
+            </div>
+            <div>
+                <button type="button" onClick={() => { logout() }}>Logout</button>
             </div>
         </div>
         </div>
