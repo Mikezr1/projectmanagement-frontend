@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { login } from "../stores/authStore.tsx";
 // import type { UserLoginRequestDTO } from "../types/models";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import userService from "../services/userService";
 
 const LoginForm = () => {
@@ -30,7 +30,8 @@ const LoginForm = () => {
             <div>
                 <label htmlFor="email">Email: </label>
                 <input
-                type="text"
+                type="email"
+                placeholder="Your email"
                 id="email"
                 name="email"
                 value={email}
@@ -41,6 +42,7 @@ const LoginForm = () => {
                 <label htmlFor="password">Password: </label>
                 <input
                 type="password"
+                placeholder="Your password"
                 id="password"
                 name="password"
                 value={password}
@@ -57,6 +59,9 @@ const LoginForm = () => {
             Reset
             </button>
             <button type="button" onClick={() => navigate("/")}>Back</button>
+            <div className="text-left">
+            <Link to="/forgot-password">Forgot password?</Link>
+            </div>
         </form>
     )
 }

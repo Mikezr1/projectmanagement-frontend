@@ -5,6 +5,7 @@ import ProjectList from './pages/ProjectListPage';
 import LandingPage from './pages/LandingPage';
 import LoginForm from './pages/LoginPage_Odemian';
 import { PrivateRoute } from './PrivateRoute';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
  
  
 function App() {
@@ -18,6 +19,7 @@ function App() {
           {/* Public routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
           {/* Protected routes */}
           <Route element={<PrivateRoute />}>

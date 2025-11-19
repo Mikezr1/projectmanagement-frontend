@@ -43,8 +43,12 @@ const loginUser = async (email: string, password: string) => {
     return response.data;
 };
 
-const resetPassword = async (dto) => {
-    const response = await axios.post(`${API_BASE_USER}/reset-password`, dto);
+const resetPassword = async (email: string, newPassword: string, confirmPassword: string) => {
+    const response = await axiosClient.post(`${API_BASE_USER}/forgot-password`, {
+        email,
+        newPassword,
+        confirmPassword
+    });
     return response.data;
 };
 
