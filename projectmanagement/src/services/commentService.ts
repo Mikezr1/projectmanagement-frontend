@@ -1,12 +1,22 @@
 import axios from "axios";
 import { API_BASE_COMMENT } from "../components/constants";
 
-const createComment = async (dto) => {
+interface CommentCreateDTO{
+    taskId: number;
+    userId: number;
+    content: string;
+}
+
+interface CommentUpdateDTO{
+    content: string;
+}
+
+const createComment = async (dto: CommentCreateDTO) => {
     const response = await axios.post(`${API_BASE_COMMENT}`, dto);
     return response.data;
 }
 
-const getCommentById = async (id) => {
+const getCommentById = async (id: number) => {
     const response = await axios.get(`${API_BASE_COMMENT}/${id}`);
     return response.data;
 }
@@ -16,12 +26,12 @@ const getAllComments = async () => {
     return response.data;
 }
 
-const getCommentsByTask = async (id) => {
+const getCommentsByTask = async (id: number ) => {
     const response = await axios.get(`${API_BASE_COMMENT}/task/${id}`);
     return response.data;
 }
 
-const updateComment = async (id, dto) => {
+const updateComment = async (id: number, dto: CommentUpdateDTO) => {
     const response = await axios.put(`${API_BASE_COMMENT}/${id}`, dto);
     return response.data;
 }

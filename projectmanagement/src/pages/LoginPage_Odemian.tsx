@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { login } from "../stores/authStore.tsx";
-// import type { UserLoginRequestDTO } from "../types/models";
-import { Link, useNavigate } from "react-router-dom";
+import type { UserLoginRequestDTO } from "../types/models";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import userService from "../services/userService";
+import { setAuthToken } from "../authToken.ts";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("alice@example.com");
@@ -18,6 +20,7 @@ const LoginForm = () => {
             );
             
             login(user);
+            // setAuthToken(token);
             alert("Welcome " + user.firstName + "!");
             navigate("/projects");
         } catch (error) {
@@ -30,8 +33,7 @@ const LoginForm = () => {
             <div>
                 <label htmlFor="email">Email: </label>
                 <input
-                type="email"
-                placeholder="Your email"
+                type="text"
                 id="email"
                 name="email"
                 value={email}
@@ -42,7 +44,6 @@ const LoginForm = () => {
                 <label htmlFor="password">Password: </label>
                 <input
                 type="password"
-                placeholder="Your password"
                 id="password"
                 name="password"
                 value={password}
@@ -59,9 +60,6 @@ const LoginForm = () => {
             Reset
             </button>
             <button type="button" onClick={() => navigate("/")}>Back</button>
-            <div className="text-left">
-            <Link to="/forgot-password">Forgot password?</Link>
-            </div>
         </form>
     )
 }
