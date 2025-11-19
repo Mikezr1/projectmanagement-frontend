@@ -7,12 +7,15 @@ import { logout, useAuthStore } from "../stores/authStore"
 const ProjectListPage = () => {
     const { user } = useAuthStore();
     const navigate = useNavigate();
+
+    const { user } = useAuthStore();
     
     const { data: projects, isLoading, isError, error } = useQuery<ProjectSummaryDTO[], Error>({
         queryKey: ['projects', user?.id],
         queryFn: () =>  projectService.getProjectsByUserId(user!.id),
         enabled: !!user.id
     });
+ 
 
     if (isLoading) return <div>Loading projects</div>
 

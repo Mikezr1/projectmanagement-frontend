@@ -26,8 +26,7 @@ function App() {
           <Route element={<PrivateRoute />}>
           <Route path="/projects" element={<ProjectListPage />} />
           <Route path="/task" element={<TaskDetailPage />} />
-          <Route path="/projects/${projectId}/tasks/${taskId}" element={<TaskDetailPage />} />
-          </Route>
+          <Route path="/projects/:projectId/tasks/:taskId" element={<TaskDetailPage />} />
         </Routes>
       </Router>
     </QueryClientProvider>
