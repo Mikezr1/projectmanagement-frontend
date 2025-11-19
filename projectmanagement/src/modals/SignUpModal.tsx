@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { type FC } from 'react';
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import axios from 'axios';
 import userService from '../services/userService';
 
 interface SignUpModalProps {
@@ -14,7 +15,7 @@ interface FormData {
     email: string;
     role: string; // ENUMTYPE -> Dev / Project leader / Customer.
     password: string;
-    confirmPassword?: string; 
+    confirmPassword: string; 
     companyName: string;
 }
 
@@ -38,23 +39,24 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
         enabled: isOpen
     });
 
-    const registerMutation = useMutation({
-        mutationFn: userService.registerUser,
+    const registerMutation = useMutation<unknown, unknown, Omit<FormDataEvent, "confirmPassword">>({
+        mutationFn: userService.createUser,
         onSuccess: () => {
-            queryClient.invalidateQueries({"user"});
+            queryClient.invalidateQueries({ queryKey: ["user"] });
             alert("Registratie voltooid. Sluit dit scherm om vervolgens in te loggen.");
             reset();
             onClose();
-        },
-        onError:(error) => {
-            alert(`Registratie mislukt: ${error.response?.data?.message || error.message}`);
+    },
+        onError: (error) => {
+            const message = axios.isAxiosError(error) ? error.response?.data?.message || error.message : (error as Error).message;
+            alert(`Registratie mislukt: ${message}`);
         }
     });
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
-        const { confirmPassword, ...userData } = data;
-        registerMutation.mutate(userData);
-    };
+   const onSubmit: SubmitHandler<FormData> = (data) => {
+    const { confirmPassword, ...userData } = data;
+    registerMutation.mutate(userData);
+};
 
     const password = watch("password");
     
@@ -124,22 +126,21 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
                          </select>
                          {errors.role &&<span className="error-message">{errors.role.message}</span>}
                      </div>
-                 {/* company name
-                 <div classNаme='signup-group'>
-                     <label htmlFor="companyNaмe"> Company name : </label>
-                     <input type="text" id='companyNaмe' {...register("companyNaмe", {
-                         required:"Veld Verplicht",
-                         minLength:{value：2，message："minimum of 2 chars"}
-                     })} 
-                     placeholder=‘Company name’
-                     cclassNаme＝{errors.companyNaмe？’inpuut error’:’’}
-                     />
-                     {(errors.companyNaмe）&&<span clasNаme=’errror-messsage’>{errors.companyNaмe.messsage}</spaan>}
-                  </dvi>
 
-                  {/* Password section */}
-                  ...
-                  
+                 {/* company name */}
+                 
+                 <div className='signup-group'>
+                     <label htmlFor="companyName"> Company name : </label>
+                     <input type="text" id='companyName' {...register("companyName", {
+                         required:"Veld Verplicht",
+                         minLength: {value:2, message: "minimum of 2 chars"},
+                     })}
+                     placeholder='Company Name'
+                     className={errors.companyName?'input error':''}
+                     />
+                     {(errors.companyName&&<span className='error-messsage'>{errors.companyName.message}</span>)}
+                  </div>
+
                   {/* Password section */}
                   <div className='signup-group'>
                       <label htmlFor="password"> Password : </label>
