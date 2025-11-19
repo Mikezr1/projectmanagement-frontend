@@ -18,9 +18,11 @@ export default function FetchComments() {
                 <div key={comment.id} className="">
                     <div>
                         {/*NAME here */}
+                        {comment.user.firstName}
                     </div>
                     <div>
                         {/*DESCRIPTION here */}
+                        {comment.description}
                     </div>
                     <div>
                         {/*Button here if owner here */}
