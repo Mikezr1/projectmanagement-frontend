@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_PROJECT } from "../components/constants";
+import { API_BASE_PROJECT } from "../components/constants.ts";
 
 const createProject = async (dto) => {
     const response = await axios.post(`${API_BASE_PROJECT}`, dto);
@@ -13,7 +13,7 @@ const getAllProjects = async () => {
 
 const getProject = async (id) => {
     if (!id) {
-        throw new console.error("error id doesnt exist");
+        throw new Error("error id doesnt exist");
     }
     const response = await axios.get(`${API_BASE_PROJECT}/${id}`);
     return response.data;

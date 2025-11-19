@@ -1,14 +1,23 @@
 import { useState } from 'react';
+import { useAuthStore } from '../components/useAuthStore';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
-    //needs userStates for email and password
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    //also needs the actual login logic
-    const handleSubmit = (e) => {
+    const [email, setEmail] = useState("alice@example.com");
+    const [password, setPassword] = useState("password123");
+    const { login } = useAuthStore();
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //loging thingy here
-    }
+        try {
+                await login(email,password);
+                console.log("Login succesful");
+                navigate("/projects");
+            } catch (err) {
+                console.error("Login failed, " + err);
+            }
+        };
 
     const handleSignupSubmit = (e) => {
         e.preventDefault();
@@ -66,5 +75,5 @@ export default function LoginPage() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
