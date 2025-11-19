@@ -13,22 +13,20 @@ export default function FetchComments() {
         if (isError) return <div>Error: { error?.message }</div>
 
         return (
-            <>
-            {comments?.map(comment=> {
-                <div key={comment.id} className="">
+            <div className="flex flex-col gap-4">
+            {comments?.map(comment => (
+                <div key={comment.id} className="p-4 bg-grey-800 rounded shadow">
                     <div>
-                        {/*NAME here */}
-                        {comment.user.firstName}
+                        {comment.user?.firstName || "Unknown"}
                     </div>
                     <div>
-                        {/*DESCRIPTION here */}
-                        {comment.description}
+                        {comment.description || "No Description"}
                     </div>
                     <div>
                         {/*Button here if owner here */}
                     </div>
                 </div>
-            })}
-            </>
+            ))}
+            </div>
         )
 }
