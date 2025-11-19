@@ -1,40 +1,39 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import taskService from "../services/taskService";
+import projectService from "../services/projectService";
+import { useNavigate } from "react-router-dom";
 
 interface TasklistProps {
     projectId: number;
 }
 
-const Tasklist = () => {
+const Tasklist = ({ projectId }: TasklistProps) => {
 
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     // 1. Tasks ophalen
     const { data: tasks, isLoading, isError, error } = useQuery({
-        queryKey: ["tasks"],
-        queryFn: taskService.getAllTasks,
+        queryKey: ["tasks", projectId],
+        queryFn: () => projectService.getTasksByProjectId(projectId),
+        enabled: !!projectId,
     });
 
-    // 2. Statussen ophalen
-    const { data: statuses } = useQuery({
-        queryKey: ["statuses"],
-        queryFn: taskService.getAllStatuses,
-    });
-
-    // 3. Mutation om status up te daten naar backend
     const updateStatusMutation = useMutation({
-        mutationFn: ({ id, newStatus }) =>
+        mutationFn: ({ id, newStatus }: { id: Number; newStatus: string}) =>
             taskService.updateTask(id, { status: newStatus }),
-
         onSuccess: () => {
-            queryClient.invalidateQueries(["tasks"]); // ververs lijst
+            queryClient.invalidateQueries({ queryKey: ["tasks", projectId]});
         },
     });
 
-    // 4. Handler
     const handleStatusChange = (taskId: number, newStatus: string) => {
         updateStatusMutation.mutate({ id: taskId, newStatus });
     };
+
+    const handleToDetail = (id:number) => {
+        navigate(`/projects/${projectId}/tasks/${id}`)
+    }
 
     // 5. Pas hier return gebruiken!
     if (isLoading) return <p>Loading...</p>;
@@ -54,7 +53,7 @@ const Tasklist = () => {
                                 <input type="checkbox" />
                             </th>
 
-                            <td className="border-2 px-2 border-white">{task.title}</td>
+                            <td className="border-2 px-2 border-white hover:underline" onClick={() => handleToDetail(task.id)}>{task.title}</td>
                             <td className="border-2 px-2 border-white">{task.user?.firstName ?? "No user"}</td>
 
                             <td className="border-2 px-2 border-white">
@@ -64,11 +63,7 @@ const Tasklist = () => {
                                         handleStatusChange(task.id, e.target.value)
                                     }
                                 >
-                                    {statuses?.map((status) => (
-                                        <option key={status} value={status}>
-                                            {status}
-                                        </option>
-                                    ))}
+                                    <option value={task.status}>{task.status}</option>
                                 </select>
                             </td>
 
