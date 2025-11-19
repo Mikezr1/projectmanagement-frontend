@@ -1,4 +1,4 @@
-import './App.css'
+// import './App.css'
 import LoginPage from "./pages/LoginPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -27,4 +27,8 @@ function App() {
   )
 }
  
+<<<<<<< HEAD
 export default App
+=======
+export default App
+>>>>>>> eecf7c0f655caa5b13da5f62eddf754152118c6c
