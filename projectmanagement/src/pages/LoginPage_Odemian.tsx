@@ -4,7 +4,6 @@ import type { UserLoginRequestDTO } from "../types/models";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import userService from "../services/userService";
-import { setAuthToken } from "../authToken.ts";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("alice@example.com");
@@ -14,13 +13,10 @@ const LoginForm = () => {
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const { user } = await userService.loginUser(
-                email.trim().toLowerCase(),
-                password.trim()
-            );
+            const user = await userService.loginUser(email.trim().toLowerCase(), password.trim());
             
             login(user);
-            // setAuthToken(token);
+            
             alert("Welcome " + user.firstName + "!");
             navigate("/projects");
         } catch (error) {
