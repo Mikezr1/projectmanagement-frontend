@@ -5,11 +5,6 @@ import type { ProjectSummaryDTO } from "../types/models";
 const axiosClient = axios.create({
     baseURL: API_BASE_PROJECT
 });
-
- 
-const axiosClient = axios.create({
-    baseURL: API_BASE_PROJECT
-});
  
 const createProject = async (dto) => {
     const response = await axios.post(`${API_BASE_PROJECT}`, dto);
