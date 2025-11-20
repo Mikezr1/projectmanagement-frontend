@@ -27,17 +27,11 @@ const ProjectListPage = () => {
             <div className="flex bg-black text-white h-[800px]">
                 {/* Sidebar */}
                 <div className="w-1/3 border-2 border-white border-t-0 p-4 flex flex-col">
-                    <p className="mb-4">Sidebar</p>
-
-                    <NavLink to="">home</NavLink>
-                    <NavLink to="">projects</NavLink>
-                    <NavLink to="">tasks</NavLink>
-
                     <button className="border border-white px-4 py-2 mb-2 hover:bg-white hover:text-black">
-                        Add Project
+                        Add project
                     </button>
                     <button className="border border-white px-4 py-2 hover:bg-white hover:text-black">
-                        Add Project
+                        Delete project
                     </button>
                 </div>
 
@@ -54,12 +48,6 @@ const ProjectListPage = () => {
                         </div>
                     ))}
                 </div>
-            </div>
-
-            <div>
-                <button type="button" onClick={() => logout()}>
-                    Logout
-                </button>
             </div>
         </div>
     );
