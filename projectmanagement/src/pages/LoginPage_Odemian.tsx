@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { login } from "../stores/authStore.tsx";
-// import type { UserLoginRequestDTO } from "../types/models";
-import { Link, useNavigate } from "react-router-dom";
+import type { UserLoginRequestDTO } from "../types/models";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import userService from "../services/userService";
 
 const LoginForm = () => {
@@ -12,12 +13,10 @@ const LoginForm = () => {
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const { user } = await userService.loginUser(
-                email.trim().toLowerCase(),
-                password.trim()
-            );
+            const user = await userService.loginUser(email.trim().toLowerCase(), password.trim());
             
             login(user);
+            
             alert("Welcome " + user.firstName + "!");
             navigate("/projects");
         } catch (error) {
@@ -30,8 +29,7 @@ const LoginForm = () => {
             <div>
                 <label htmlFor="email">Email: </label>
                 <input
-                type="email"
-                placeholder="Your email"
+                type="text"
                 id="email"
                 name="email"
                 value={email}
@@ -42,7 +40,6 @@ const LoginForm = () => {
                 <label htmlFor="password">Password: </label>
                 <input
                 type="password"
-                placeholder="Your password"
                 id="password"
                 name="password"
                 value={password}
@@ -59,9 +56,6 @@ const LoginForm = () => {
             Reset
             </button>
             <button type="button" onClick={() => navigate("/")}>Back</button>
-            <div className="text-left">
-            <Link to="/forgot-password">Forgot password?</Link>
-            </div>
         </form>
     )
 }

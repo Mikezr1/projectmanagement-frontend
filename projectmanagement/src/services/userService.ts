@@ -1,63 +1,79 @@
 import axios from "axios";
 import { API_BASE_USER } from "../components/constants";
-// import type { UserLoginRequestDTO } from "../types/models";
-import type { UserLoginResponseDTO } from "../types/models";
+import type { UserLoginResponseDTO, UserSummaryDTO } from "../types/models";
+
+interface UserRegistrationData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  password: string;
+  companyName: string;
+}
 
 const axiosClient = axios.create({
-    baseURL: API_BASE_USER
+  baseURL: API_BASE_USER,
 });
 
-const createUser = async (dto) => {
-    const response = await axios.post(`${API_BASE_USER}`, dto);
-    return response.data;
+const createUser = async (dto: UserRegistrationData) => {
+  const response = await axiosClient.post("/", dto);
+  return response.data;
 };
 
-const getUserById = async (id) => {
-    if (!id) {
-        throw new console.error("error id doesnt exist");
-    }
-    const response = await axios.get(`${API_BASE_USER}/${id}`);
-    return response.data;
+const getUserById = async (id: string | number) => {
+  if (!id) throw new Error("User ID is required");
+  const response = await axiosClient.get(`/${id}`);
+  return response.data;
 };
 
 const getAllUsers = async () => {
-    const response = await axios.get(`${API_BASE_USER}`);
-    return response.data;
+  const response = await axiosClient.get("/");
+  return response.data;
 };
 
-const updateUser = async (id, dto) => {
-    const response = await axios.put(`${API_BASE_USER}/${id}`, dto);
-    return response.data;
+const getUserTypes = async () => {
+  const response = await axiosClient.get("/types");
+  return response.data;
 };
 
-const deleteUser = async (id) => {
-    const response = await axios.delete(`${API_BASE_USER}/${id}`);
-    return response.data;
+const updateUser = async (id: number, dto: UserRegistrationData) => {
+  const response = await axiosClient.put(`/${id}`, dto);
+  return response.data;
 };
 
-const loginUser = async (email: string, password: string) => {
-    const response = await axiosClient.post<UserLoginResponseDTO>("/login", {
-        email: email.trim().toLowerCase(),
-        password: password.trim().toLowerCase()
-    });
-    return response.data;
+const deleteUser = async (id: number) => {
+  const response = await axiosClient.delete(`/${id}`);
+  return response.data;
 };
 
-const resetPassword = async (email: string, newPassword: string, confirmPassword: string) => {
-    const response = await axiosClient.post(`${API_BASE_USER}/forgot-password`, {
-        email,
-        newPassword,
-        confirmPassword
-    });
-    return response.data;
+const loginUser = async (email: string, password: string):Promise<UserSummaryDTO> => {
+  const response = await axiosClient.post<UserLoginResponseDTO>("/login", {
+    email: email.trim().toLowerCase(),
+    password: password.trim(),
+  });
+  return response.data.user;
+};
+
+const resetPassword = async (
+  email: string,
+  newPassword: string,
+  confirmPassword: string
+) => {
+  const response = await axiosClient.post("/forgot-password", {
+    email,
+    newPassword,
+    confirmPassword,
+  });
+  return response.data;
 };
 
 export default {
-    createUser,
-    getUserById,
-    getAllUsers,
-    updateUser,
-    deleteUser,
-    loginUser,
-    resetPassword,
-}
+  createUser,
+  getUserById,
+  getAllUsers,
+  updateUser,
+  deleteUser,
+  loginUser,
+  resetPassword,
+  getUserTypes,
+};
