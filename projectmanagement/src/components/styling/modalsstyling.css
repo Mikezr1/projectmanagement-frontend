@@ -1,0 +1,121 @@
+/* Overlay styles */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+}
+
+/* Content styles */
+.custom-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #030303;
+  background: #aca8a8;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+  outline: none;
+  padding: 0;
+  max-width: 500px;
+  max-height: 90vh;
+  width: 90%;
+}
+
+/* Header */
+.custom-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.custom-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #121010;
+}
+
+.custom-modal-close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #070707;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.custom-modal-close-button:hover {
+  color: #000;
+}
+
+/* Body */
+.custom-modal-body {
+  padding: 20px;
+  color: #000;
+}
+
+/* Variants */
+.custom-modal-content.small {
+  max-width: 300px;
+}
+
+.custom-modal-content.medium {
+  max-width: 500px;
+}
+
+.custom-modal-content.large {
+  max-width: 800px;
+}
+
+.custom-modal-content.full {
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  transform: none;
+  margin-right: 0;
+  max-width: none;
+  max-height: none;
+  width: auto;
+}
+
+/* Animation */
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+/* Dark overlay variant */
+.custom-modal-overlay.dark {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Light overlay variant */
+.custom-modal-overlay.light {
+  background-color: rgba(246, 247, 249, 0.75);
+}

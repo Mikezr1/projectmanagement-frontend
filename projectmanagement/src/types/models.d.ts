@@ -7,6 +7,23 @@ export interface CommentCreateDTO {
     taskId: number;
     userId: number;
 }
+interface UserRegistrationData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  password: string;
+  companyName: string;
+}
+// interface FormData {
+//     firstName: string;
+//     lastName: string;
+//     email: string;
+//     role: string; // ENUMTYPE -> Dev / Project leader / Customer.
+//     password: string;
+//     confirmPassword?: string; 
+//     companyName: string;
+// }
 
 export interface CommentSummaryDTO {
     id: number;

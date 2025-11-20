@@ -1,6 +1,3 @@
-/* tslint:disable */
-/* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2025-11-12 11:21:22.
 import Modal from 'react-modal';
 
 interface CustomModalProps {

@@ -16,8 +16,8 @@ const ForgotPasswordPage = () => {
             await userService.resetPassword(email, newPassword, confirmPassword);
             alert("Password updated!");
             navigate("/login");
-        } catch (error: any) {
-            alert(error.response?.data || error.message);
+        } catch (error) {
+            alert(error.message);
         }
     }
 

@@ -1,6 +1,5 @@
-@import "tailwindcss";
 
-/* :root {
+:root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -27,6 +26,8 @@ a:hover {
 body {
   margin: 0;
   display: flex;
+  flex-direction: column;
+  /* //flex-wrap: wrap; */
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -48,9 +49,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -67,4 +70,25 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-} */
+} 
+.custom-modal-overlay.dark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+ 
+.custom-modal-content.medium {
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  max-width: 28rem; /* Tailwind max-w-md */
+  width: 100%;
+}
+ 

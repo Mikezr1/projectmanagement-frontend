@@ -8,6 +8,7 @@ import { PrivateRoute } from './PrivateRoute';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import TaskDetailPage from "./pages/TaskDetailPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
+import NavBar from "./components/NavBar";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
+        <NavBar /> 
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<LandingPage />} />
