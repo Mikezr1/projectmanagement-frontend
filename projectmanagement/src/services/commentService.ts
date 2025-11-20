@@ -4,11 +4,11 @@ import { API_BASE_COMMENT } from "../components/constants";
 interface CommentCreateDTO{
     taskId: number;
     userId: number;
-    content: string;
+    description: string;
 }
 
 interface CommentUpdateDTO{
-    content: string;
+    description: string;
 }
 
 const createComment = async (dto: CommentCreateDTO) => {
