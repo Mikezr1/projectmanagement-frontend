@@ -65,6 +65,12 @@ const ProjectListPage = () => {
 
                 {/* Project List */}
                 <div className="w-2/3 border-2 border-white border-t-0 border-l-0 p-4">
+                    {/* Breadcrumb */}
+                    <div className="text-sm mb-4 text-gray-500 flex items-center gap-2">
+                        <p>Projects</p>
+                        <span>{">"}</span>
+                    </div>
+
                     {projects?.map((project) => (
                         <div key={project.id} className="mb-6 border border-white p-4 flex items-center gap-3">
 
