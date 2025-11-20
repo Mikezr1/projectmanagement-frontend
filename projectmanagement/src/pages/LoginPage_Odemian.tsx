@@ -3,6 +3,7 @@ import { login } from "../stores/authStore.tsx";
 import { Link, useNavigate } from "react-router-dom";
 import userService from "../services/userService";
 import { useModal } from "../modals/ModalContext.tsx";
+import ForgotPasswordModal from "../modals/ForgotPasswordModal.tsx";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("alice@example.com");
@@ -59,9 +60,10 @@ const LoginForm = () => {
                 navigate("/")
             }}
             >Back</button>
-            <div className="text-left">
+            <ForgotPasswordModal />
+            {/* <div className="text-left">
             <Link to="/forgot-password">Forgot password?</Link>
-            </div>
+            </div> */}
         </form>
     )
 }

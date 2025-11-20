@@ -13,6 +13,7 @@ interface ModalOptions {
     overlayStyle?: OverlayStyle;
     context?: ReactNode;
     isOpen?: boolean;
+    replaceExisting?: boolean;
 }
 
 interface ModalContextValue {
@@ -28,7 +29,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     const location = useLocation();
 
     const showModal = useCallback((options : ModalOptions) => {
-        if (modal?.isOpen) return;
+        if (modal?.isOpen && !options.replaceExisting) return;
         setModal({
             isOpen: true,
             ...options
