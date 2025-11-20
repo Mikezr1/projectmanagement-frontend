@@ -1,6 +1,7 @@
-import { createContext, useState, useCallback, useContext } from "react";
+import { createContext, useState, useCallback, useContext, useEffect } from "react";
 import type { ReactNode } from "react";
 import CustomModal from "./CustomModal.tsx"
+import { useLocation } from "react-router-dom";
 
 type ModalSize = "small" | "medium" | "large";
 type OverlayStyle = "light" | "dark";
@@ -24,6 +25,7 @@ const ModalContext = createContext<ModalContextValue | undefined>(undefined);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
     const [modal, setModal] = useState<ModalOptions | null>(null);
+    const location = useLocation();
 
     const showModal = useCallback((options : ModalOptions) => {
         if (modal?.isOpen) return;
@@ -37,6 +39,10 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         setModal(null);
     }, []);
 
+    useEffect(() => {
+        if (modal?.isOpen) hideModal();
+    }, [location.pathname]);
+    
     return (
         <ModalContext.Provider value={{ showModal, hideModal, modal }}>
             {children}

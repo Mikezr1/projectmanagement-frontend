@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { login } from "../stores/authStore.tsx";
-import type { UserLoginRequestDTO } from "../types/models";
-import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
 import userService from "../services/userService";
+import { useModal } from "../modals/ModalContext.tsx";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("alice@example.com");
     const [password, setPassword] = useState("password123");
     const navigate = useNavigate();
+    const { hideModal } = useModal();
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -16,7 +16,6 @@ const LoginForm = () => {
             const user = await userService.loginUser(email.trim().toLowerCase(), password.trim());
             
             login(user);
-            
             alert("Welcome " + user.firstName + "!");
             navigate("/projects");
         } catch (error) {
@@ -55,7 +54,14 @@ const LoginForm = () => {
             }} >
             Reset
             </button>
-            <button type="button" onClick={() => navigate("/")}>Back</button>
+            <button type="button" onClick={() => {
+                hideModal();
+                navigate("/")
+            }}
+            >Back</button>
+            <div className="text-left">
+            <Link to="/forgot-password">Forgot password?</Link>
+            </div>
         </form>
     )
 }
