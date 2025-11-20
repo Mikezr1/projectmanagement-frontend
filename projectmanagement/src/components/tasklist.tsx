@@ -47,21 +47,21 @@ const Tasklist = ({ projectId }: TasklistProps) => {
     const sortedTasks = [...tasks].sort((a, b) => a.id - b.id);
 
     return (
-        <div className="tasklist">
-            <table className="border-2 border-white">
-                <tbody >
+        <div className="tasklist rounded">
+            <table className="bg-gray-700 text-white rounded m-2 p-2">
+                <tbody className="">
                     {sortedTasks?.map((task) => (
-                        <tr key={task.id} className="border-2 p-2 border-white">
-                            <th className="border-2 p-2 border-white">
+                        <tr key={task.id} className="border-4 border-black text-white rounded p-2">
+                            <th className="p-2">
                                 <input type="checkbox" />
                             </th>
 
-                            <td className="hover:underline border-2 p-2 " onClick={() => handleToDetail(task.id)}>
+                            <td className="hover:underline p-2 border-r border-orange-600" onClick={() => handleToDetail(task.id)}>
                                 {task.title}
                             </td>
-                            <td className="border-2 p-2 border-white">{task.user?.firstName ?? "No user"}</td>
+                            <td className="p-2 border-r border-orange-600">{task.user?.firstName ?? "No user"}</td>
 
-                            <td className="border-2 p-2 border-white">
+                            <td className="p-2 border-r border-orange-600">
                                 <select
                                     value={task.status}
                                     onChange={(e) =>
@@ -77,7 +77,7 @@ const Tasklist = ({ projectId }: TasklistProps) => {
                             </td>
 
                             <td>
-                                <span className="m-2 items-center p-1 justify-center w-8 h-8 rounded border-2 border-white">
+                                <span className="m-2 items-center p-1 justify-center w-8 h-8 rounded border-1 border-white">
                                     {task.status}
                                 </span>
                             </td>
