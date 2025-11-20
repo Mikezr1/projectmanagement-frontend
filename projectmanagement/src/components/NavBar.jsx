@@ -21,9 +21,9 @@ const NavBar = () => {
           </div>
           <h1 className="NavBar-title">ProjectManager Pro</h1>
         </div>
-        <button className="signup-button" onClick={openModal}>Sign up</button>
+        {/* <button className="signup-button" onClick={openModal}>Sign up</button> */}
       </nav>
-      <SignUpModal isOpen={isModalOpen} onClose={closeModal}/>
+      {/* <SignUpModal isOpen={isModalOpen} onClose={closeModal}/> */}
     </>
   );
 };
