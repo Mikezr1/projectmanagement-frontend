@@ -20,7 +20,7 @@ const Tasklist = ({ projectId }: TasklistProps) => {
     });
 
     const updateStatusMutation = useMutation({
-        mutationFn: ({ id, newStatus }: { id: Number; newStatus: string}) =>
+        mutationFn: ({ id, newStatus }: { id: number; newStatus: string}) =>
             taskService.updateTask(id, { status: newStatus }),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["tasks", projectId]});
