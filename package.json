@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@odemian/react-store": "^0.0.12",
+    "react-modal": "^3.16.3"
+  }
+}

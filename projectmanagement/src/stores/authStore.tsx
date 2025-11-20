@@ -3,17 +3,24 @@ import type { UserSummaryDTO } from "../types/models";
 
 interface AuthState {
     user: UserSummaryDTO | null,
-    // token: string | null
 }
 
+const LOCAL_KEY = "authUser";
+
+const savedUser = localStorage.getItem(LOCAL_KEY);
+
 const initialAuthState: AuthState = {
-    user: null,
-    // token: null
-}
+    user: savedUser ? JSON.parse(savedUser) : null,
+};
 
 export const [useAuthStore, setAuthStore] = createStore<AuthState>(initialAuthState);
 
-export const login = (user: UserSummaryDTO): void => { setAuthStore({ user }); }
-// export const login = (user: UserSummaryDTO, token: string): void => { setAuthStore({ user, token }); }
+export const login = (user: UserSummaryDTO): void => { 
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(user));
+    setAuthStore({ user }); 
+};
 
-export const logout = () => setAuthStore(initialAuthState);
+export const logout = (): void => { 
+    localStorage.removeItem(LOCAL_KEY);
+    setAuthStore({ user:null }); 
+};
