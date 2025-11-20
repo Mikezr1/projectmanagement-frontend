@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { TaskSummaryDTO } from "../types/models";
 import FetchComments from "../components/FetchComments";
 import GoToProject from "../components/goToProject";
+import projectService from "../services/projectService";
 
 
 const TaskDetailPage = () => {
@@ -20,6 +21,11 @@ const TaskDetailPage = () => {
         queryKey: ['task', taskId],
         queryFn: () => taskService.getTask(taskId)
     })
+
+    const { data: project } = useQuery({
+        queryKey: ["project", projectId],
+        queryFn: () => projectService.getProject(projectId),
+    });
 
     if (isLoading) return <div>Loading...</div>
     if (isError) return <div>Error: {error?.message}</div>
@@ -44,10 +50,15 @@ const TaskDetailPage = () => {
                         Delete task
                     </button>
 
-                    <p className="text-2xl pt-10">
-                        Role List
-
-                    </p>
+                    <p className="text-2xl pt-10 mt-6">Role list</p>
+                    <div className="flex flex-col gap-2 mt-2">
+                        {project.users?.map((user) => (
+                            <div key={user.id} className="flex gap-2 border p-2 bg-gray-100 text-black rounded">
+                                <p>{user.firstName} {user.lastName}</p>
+                                <p className="lowercase">({user.role})</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Main content */}

@@ -6,7 +6,7 @@ import { useAuthStore } from "../stores/authStore";
 import type { ProjectSummaryDTO } from "../types/models";
 
 const ProjectDetailPage = () => {
-    const { projectId } = useParams<{projectId: string}>();
+    const { projectId } = useParams<{projectId: string }>();
     const numericProjectId = Number(projectId);
 
     const { user } = useAuthStore();
@@ -40,10 +40,20 @@ const ProjectDetailPage = () => {
                         Add task
                     </button>
 
-                    <p className="text-2xl pt-10">
-                        Role List
-                        
-                    </p>
+                    <p className="text-2xl pt-10 mt-6">Role list</p>
+
+                    <div className="flex flex-col gap-2 mt-2">
+                        {project.users?.map((user) => (
+                            <div
+                                key={user.id}
+                                className="flex gap-2 border p-2 bg-gray-100 text-black rounded"
+                            >
+                                <p>{user.firstName} {user.lastName}</p>
+                                <p className="lowercase">({user.role})</p>
+                            </div>
+                        ))}
+                    </div>
+
                 </div>
 
                 {/* Main content */}
@@ -58,10 +68,10 @@ const ProjectDetailPage = () => {
 
                     {/* Title */}
                     <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
-                    
+
 
                     {/* Task list komt hier nog */}
-                    <Tasklist projectId={numericProjectId}/>
+                    <Tasklist projectId={numericProjectId} />
 
                 </div>
             </div>
