@@ -6,7 +6,7 @@ import { useAuthStore } from "../stores/authStore";
 import type { ProjectSummaryDTO } from "../types/models";
 
 const ProjectDetailPage = () => {
-    const { projectId } = useParams<{projectId: string}>();
+    const { projectId } = useParams<{projectId: string }>();
     const numericProjectId = Number(projectId);
 
     const { user } = useAuthStore();
@@ -31,18 +31,29 @@ const ProjectDetailPage = () => {
             <div className="flex bg-black text-white h-[800px]">
 
                 {/* Sidebar */}
-                <div className="w-1/3 border-2 border-white border-t-0 p-4">
-                    <p className="mb-4">Sidebar</p>
-                    <NavLink to="">home</NavLink>
-                    <NavLink to="">projects</NavLink>
-                    <NavLink to="">tasks</NavLink>
+                <div className="w-1/3 border-2 border-white border-t-0 p-4 flex flex-col">
 
                     <button className="border border-white px-4 py-2 mb-2 hover:bg-white hover:text-black">
-                        Add Project
+                        Add member
                     </button>
                     <button className="border border-white px-4 py-2 hover:bg-white hover:text-black">
-                        Add Task
+                        Add task
                     </button>
+
+                    <p className="text-2xl pt-10 mt-6">Role list</p>
+
+                    <div className="flex flex-col gap-2 mt-2">
+                        {project.users?.map((user) => (
+                            <div
+                                key={user.id}
+                                className="flex gap-2 border p-2 bg-gray-100 text-black rounded"
+                            >
+                                <p>{user.firstName} {user.lastName}</p>
+                                <p className="lowercase">({user.role})</p>
+                            </div>
+                        ))}
+                    </div>
+
                 </div>
 
                 {/* Main content */}
@@ -52,15 +63,15 @@ const ProjectDetailPage = () => {
                     <div className="text-sm mb-4 text-gray-500 flex items-center gap-2">
                         <NavLink to="/projects">Projects</NavLink>
                         <span>{">"}</span>
-                        <span className="text-gray-800 font-semibold">{project.title}</span>
+                        <span className="text-white font-semibold">{project.title}</span>
                     </div>
 
                     {/* Title */}
                     <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
-                    
+
 
                     {/* Task list komt hier nog */}
-                    <Tasklist projectId={numericProjectId}/>
+                    <Tasklist projectId={numericProjectId} />
 
                 </div>
             </div>
