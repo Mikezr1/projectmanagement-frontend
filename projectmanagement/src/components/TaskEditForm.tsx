@@ -30,7 +30,7 @@ const TaskEditForm = ({ task, statuses }: TaskEditFormProps) => {
 
 
     return (
-        <div className="flex flex-col gap-2  text-white rounded shadow py-4">
+        <div className="flex flex-col gap-2 text-white rounded shadow">
             {isEditing ? (
                 <>
                     <input

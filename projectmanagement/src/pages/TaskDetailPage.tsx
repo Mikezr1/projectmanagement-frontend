@@ -9,6 +9,7 @@ import { useState } from "react";
 import TaskEditForm from "../components/TaskEditForm";
 import NavBar from "../components/NavBar";
 import { useAuthStore } from "../stores/authStore";
+import TaskDelete from "../components/TaskDelete";
 
 const TaskDetailPage = () => {
     const navigate = useNavigate();
@@ -106,7 +107,7 @@ const TaskDetailPage = () => {
                 {/* Sidebar */}
                 <div className="w-1/3 max-w-[400px] bg-blue-900 rounded p-4 m-4 flex flex-col">
                     <TaskEditForm task={task} statuses={statuses ?? []} />
-                    <button className="border border-white px-4 py-2 hover:bg-white hover:text-black">Delete task</button>
+                    <TaskDelete task={task}/>
 
                     <p className="text-2xl pt-10 mt-6">Role list</p>
                     <div className="flex flex-col gap-2 mt-2">
