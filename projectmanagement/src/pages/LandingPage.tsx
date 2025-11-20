@@ -1,8 +1,9 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import LoginModal from "../modals/LoginModal";
 
 const LandingPage = () => {
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     return (
         <div className="py-10 bg-black px-6">
@@ -10,9 +11,8 @@ const LandingPage = () => {
                 <div className="flex flex-col align-left py-2 gap-4">
                     <h3 className="text-bold text-2xl text-white">Start managing your projects</h3>
                     <p className="text-sm text-white" >This application will help you manage your projects better then ever before.</p>
-                    <button className="" type="button" onClick={() => navigate("/login")}>
-                        Login
-                    </button>
+                    {/* <button className="" type="button" onClick={() => navigate("/login")}> */}
+                    <LoginModal />
                 </div>
                 <div>
                     <div className="bg-[#636363] aspect-video">

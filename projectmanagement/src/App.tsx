@@ -1,5 +1,5 @@
 // import './App.css'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import ProjectListPage from './pages/ProjectListPage';
 import LandingPage from './pages/LandingPage';
@@ -16,7 +16,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
+      {/* <Router> */}
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<LandingPage />} />
@@ -25,12 +25,19 @@ function App() {
 
           {/* Protected routes */}
           <Route element={<PrivateRoute />}>
+<<<<<<< Updated upstream
             <Route path="/projects" element={<ProjectListPage />} />
             <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
             <Route path="/projects/:projectId/tasks/:taskId" element={<TaskDetailPage />} />
+=======
+          <Route path="/projects" element={<ProjectListPage />} />
+          {/* <Route path="/projects/:projectId" element={<ProjectDetailPage />} /> */}
+          <Route path="/tasks" element={<TaskDetailPage />} />
+          <Route path="/projects/:projectId/tasks/taskId" element={<TaskDetailPage />} />
+>>>>>>> Stashed changes
           </Route>
         </Routes>
-      </Router>
+      {/* </Router> */}
     </QueryClientProvider>
   )
 }
