@@ -1,4 +1,4 @@
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import projectService from "../services/projectService";
 import Tasklist from "../components/tasklist";
@@ -7,10 +7,12 @@ import type { ProjectSummaryDTO } from "../types/models";
 import AddMemberModal from "../modals/AddMemberModal";
 
 const ProjectDetailPage = () => {
-    const { projectId } = useParams<{projectId: string }>();
+    const { projectId } = useParams<{ projectId: string }>();
     const numericProjectId = Number(projectId);
 
     const { user } = useAuthStore();
+    const navigate = useNavigate();
+
 
     // Project ophalen
     const { data: project, isLoading, isError, error } = useQuery<ProjectSummaryDTO, Error>({
@@ -46,6 +48,17 @@ const ProjectDetailPage = () => {
                         </button>
 
                         <span className="text-white">Hi, {user.firstName}</span>
+                        <button
+                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                            type="button"
+                            onClick={() => {
+                                localStorage.removeItem("token");
+                                navigate("/");                
+                            }}
+                        >
+                            Logout
+                        </button>
+
                     </div>
                 </div>
             </div>
@@ -57,7 +70,7 @@ const ProjectDetailPage = () => {
                     <div className="flex flex-col gap-2 mt-2">
                         <AddMemberModal projectId={numericProjectId} />
                         <button className="border border-white px-4 py-2 hover:bg-white hover:text-black">
-                        Add task</button>
+                            Add task</button>
                     </div>
                     <p className="text-2xl pt-10 mt-6">Role list</p>
 

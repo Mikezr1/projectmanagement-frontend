@@ -15,7 +15,7 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             const user = await userService.loginUser(email.trim().toLowerCase(), password.trim());
-            
+
             login(user);
             alert("Welcome " + user.firstName + "!");
             navigate("/projects");
@@ -26,41 +26,48 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleFormSubmit}>
-            <div>
+            <div className="py-2">
                 <label htmlFor="email">Email: </label>
                 <input
-                type="text"
-                id="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                    type="text"
+                    id="email"
+                    className="border-1 border-white rounded"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="pt-2 pb-4">
                 <label htmlFor="password">Password: </label>
                 <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                    type="password"
+                    className="border-1 border-white rounded"
+                    id="password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
-            <button type="submit">Login</button>
-            <button
-            type="button"
-            onClick={() => {
-                setEmail("")
-                setPassword("")
-            }} >
-            Reset
+            <button className="pr-2 mr-2 border-1 text-white p-2 rounded bg-black hover:bg-gray-200 hover:text-black" type="submit">
+                Login
             </button>
-            <button type="button" onClick={() => {
+            <button
+                type="button"
+                className="pr-2 border-1 text-white p-2 rounded bg-black hover:bg-white hover:text-black"
+                onClick={() => {
+                    setEmail("")
+                    setPassword("")
+                }} >
+                Reset
+            </button>
+            <div className="flex py-2">
+                <ForgotPasswordModal />
+            </div>
+            <button className="flex" type="button" onClick={() => {
                 hideModal();
                 navigate("/")
             }}
             >Back</button>
-            <ForgotPasswordModal />
             {/* <div className="text-left">
             <Link to="/forgot-password">Forgot password?</Link>
             </div> */}

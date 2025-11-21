@@ -31,6 +31,17 @@ export default function CustomModal({
         overlayClassName={`custom-modal-overlay ${overlayStyle}`}
         className={`custom-modal-content ${size}`}
         closeTimeoutMS={0}
+        style={{
+          content: {
+            background: '#06061c',
+            color: 'white',
+            borderRadius: '12px',
+            padding: '1.25rem'
+          },
+          overlay: {
+            // optioneel: extra overlay inline styles
+          }
+        }}
         >
             <div className="custom-modal-header flex justify-between items-center border-b pb-2">
         {title && <h2 className="text-xl font-bold">{title}</h2>}
