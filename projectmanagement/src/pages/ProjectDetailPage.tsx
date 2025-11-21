@@ -53,18 +53,12 @@ const ProjectDetailPage = () => {
             <div className="flex bg-black text-white h-[800px]">
 
                 {/* Sidebar */}
-                <div className="w-1/3 border-2 border-white border-t-0 p-4 flex flex-col">
-                <AddMemberModal projectId={numericProjectId} />
-                    {/* <button className="border border-white px-4 py-2 mb-2 hover:bg-white hover:text-black">
                 <div className="w-1/3 max-w-[400px] bg-blue-900 rounded p-4 m-4 flex flex-col">
-
-                    <button className="border border-white px-4 py-2 mb-2 hover:bg-white hover:text-black">
-                        Add member
-                    </button> */}
-                    <button className="border border-white px-4 py-2 hover:bg-white hover:text-black">
-                        Add task
-                    </button>
-
+                    <div className="flex flex-col gap-2 mt-2">
+                        <AddMemberModal projectId={numericProjectId} />
+                        <button className="border border-white px-4 py-2 hover:bg-white hover:text-black">
+                        Add task</button>
+                    </div>
                     <p className="text-2xl pt-10 mt-6">Role list</p>
 
                     <div className="flex flex-col gap-2 mt-2">
