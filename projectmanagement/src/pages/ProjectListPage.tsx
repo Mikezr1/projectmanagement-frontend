@@ -73,7 +73,7 @@ const ProjectListPage = () => {
 
                 {/* Sidebar */}
                 <div className="w-1/3 max-w-[400px] bg-blue-900 rounded p-4 m-4 flex flex-col">
-                    <div className="flex flex-col gap-2 mt-2">
+                    <div className="flex flex-col gap-2">
                     
                     <AddProjectModal />
                     
