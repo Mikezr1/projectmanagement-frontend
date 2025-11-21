@@ -203,7 +203,7 @@ const TaskDetailPage = () => {
                                     </div>
                                     <div>
                                         {/* Delete button only for comment owner */}
-                                        {comment.user?.id === 1 && ( // Pas dit aan naar ingelogde user
+                                        {comment.user?.id === user.id && ( // Pas dit aan naar ingelogde user
                                             <button
                                                 onClick={() => deleteCommentMutation.mutate(comment.id)}
                                                 className="border-2 rounded p-1 hover:bg-white hover:text-black"

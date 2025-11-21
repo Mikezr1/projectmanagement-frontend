@@ -74,31 +74,23 @@ const ProjectListPage = () => {
                 {/* Sidebar */}
                 <div className="w-1/3 max-w-[400px] bg-blue-900 rounded p-4 m-4 flex flex-col">
                     <div className="flex flex-col gap-2 mt-2">
-                    
-                    <AddProjectModal />
-                    
-                    {/* <button className="border border-white px-4 py-2 mb-2 hover:bg-white hover:text-black">
-                <div className="w-1/3 max-w-[400px] bg-blue-900 rounded p-4 m-4 flex flex-col">
+                        {user.role === "PROJECT_LEADER" && <AddProjectModal />}
+                        {user.role === "PROJECT_LEADER" &&
+                        <button
+                            className="border border-white px-4 py-2 hover:bg-white hover:text-black"
+                            onClick={() => {
+                                if (!selectedProjectId) {
+                                    alert("Select a project first.");
+                                    return;
+                                }
 
-                    <button className="border border-white px-4 py-2 mb-2 hover:bg-white hover:text-black">
-                        Add project
-                    </button> */}
-
-                    <button
-                        className="border border-white px-4 py-2 hover:bg-white hover:text-black"
-                        onClick={() => {
-                            if (!selectedProjectId) {
-                                alert("Select a project first.");
-                                return;
-                            }
-
-                            if (confirm("Are you sure you want to delete this project?")) {
-                                deleteMutation.mutate(selectedProjectId);
-                            }
-                        }}
-                    >
+                                if (confirm("Are you sure you want to delete this project?")) {
+                                    deleteMutation.mutate(selectedProjectId);
+                                }
+                            }}
+                        >
                         Delete project
-                    </button>
+                        </button>}
                     </div>
                 </div>
 
