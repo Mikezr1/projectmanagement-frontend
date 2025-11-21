@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_USER } from "../components/constants";
+import { API_BASE, API_BASE_USER } from "../components/constants";
 import type { UserLoginResponseDTO, UserSummaryDTO } from "../types/models";
 
 interface UserRegistrationData {
@@ -27,7 +27,7 @@ const getUserById = async (id: string | number) => {
 };
 
 const getAllUsers = async () => {
-  const response = await axiosClient.get("/");
+  const response = await axios.get(API_BASE_USER);
   return response.data;
 };
 

@@ -18,3 +18,54 @@
   max-width: 28rem; /* Tailwind max-w-md */
   width: 100%;
 }
+
+.custom-modal-overlay.dark {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-modal-overlay.light {
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-modal-content {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90%;
+  overflow-y: auto;
+}
+
+.custom-modal-content.small {
+  max-width: 300px;
+}
+
+.custom-modal-content.medium {
+  max-width: 500px;
+}
+
+.custom-modal-content.large {
+  max-width: 700px;
+}
+
+.custom-modal-header h2 {
+  margin: 0;
+}
+
+.custom-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.custom-modal-footer button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
