@@ -2,13 +2,13 @@ import React, { type FC } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import userService from "../services/userService";
-import { Role } from "../components/enums/Role";
+import {  Role } from "../types/models";
 
 interface UserRegistrationData {
   firstName: string;
   lastName: string;
   email: string;
-  Role: Role;
+  role: Role;
   password: string;
   companyName: string;
 }
@@ -29,12 +29,12 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
       firstName: "",
       lastName: "",
       email: "",
-      Role: Role.CUSTOMER,
+      role: Role.DEVELOPER,
       password: "",
       companyName: "",
     },
   });
-  const { data: role, isLoading: loadingTypes } = useQuery({
+  const { data: roles, isLoading: loadingTypes } = useQuery({
     queryKey: ["Role"],
     queryFn: userService.getUserTypes,
     enabled: isOpen,
@@ -55,11 +55,11 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
     },
   });
   const onSubmit: SubmitHandler<UserRegistrationData> = (data) => {
-    const roleEnum = Role[data.Role as keyof typeof Role];
-    const finalData = {...data, role: roleEnum};
-    registerMutation.mutate(finalData);
+    registerMutation.mutate(data)
   };
+
   if (!isOpen) return null;
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -113,28 +113,26 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
             <label htmlFor="role">Role : *</label>
             <select
               id="role"
-              {...register("Role", {
+              {...register("role", {
                 required: "Selecteer een gebruikerstype",
               })}
-              className={errors.Role ? "input-error" : ""}
-              disabled={loadingTypes}
+              className={errors.role ? "input-error" : ""}
             >
               <option value="">Selecteer Rol</option>
-              {Role && role.length > 0 ? (
-                role.map((type) => (
+              {roles && roles.length > 0 ? (
+                roles.map((type) => (
                   <option key={type} value={type}>
                     {type === "DEVELOPER" && "Developer"}
                     {type === "PROJECT_LEADER" && "Project Leader"}
                     {type === "CUSTOMER" && "Customer"}
-                     {/* {!["DEVELOPER", "PROJECT_LEADER", "CUSTOMER"].includes(type) && type}  */}
                   </option>
                 ))
               ) : (
                 <option disabled>No roles available</option>
               )}
             </select>
-            {errors.Role && (
-              <span className="error-message">{errors.Role.message}</span>
+            {errors.role && (
+              <span className="error-message">{errors.role.message}</span>
             )}
           </div>
           {/* company name */}

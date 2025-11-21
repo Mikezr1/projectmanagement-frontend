@@ -11,7 +11,7 @@ interface UserRegistrationData {
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
+  role: Role;
   password: string;
   companyName: string;
 }
@@ -144,4 +144,8 @@ export interface UserUpdateRoleDTO {
 
 export type Status = "CREATED" | "TODO" | "IN_PROGRESS" | "DONE" | "TESTING" | "BUG_FIXES";
 
-export type Role = "PROJECT_LEADER" | "DEVELOPER" | "CUSTOMER";
+export enum Role{
+    PROJECT_LEADER = "Project_Leader",
+    DEVELOPER = "Developer",
+    CUSTOMER = "Customer"
+}

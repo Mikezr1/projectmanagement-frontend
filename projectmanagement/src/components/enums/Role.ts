@@ -1,5 +1,0 @@
-export enum Role {
-  PROJECT_LEADER = "PROJECT_LEADER",
-  DEVELOPER = "DEVELOPER",
-  CUSTOMER = "CUSTOMER",
-}

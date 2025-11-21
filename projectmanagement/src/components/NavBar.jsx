@@ -1,9 +1,4 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-// import  SignUpModal  from './modals/SignUpModal';
-//import './App.css'
-//import Modal from 'react'
-//import CustomModal from '../modals/CustomModal';
 import SignUpModal from '../modals/SignUpModal';
 
 

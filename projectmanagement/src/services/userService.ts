@@ -7,7 +7,7 @@ interface UserRegistrationData {
   firstName: string;
   lastName: string;
   email: string;
-  Role: Role;
+  role: Role;
   password: string;
   companyName: string;
 }
@@ -42,8 +42,8 @@ const getAllUsers = async () => {
   return response.data;
 };
 
-const getUserTypes = async () => {
-  const response = await axiosClient.get("/types");
+const getUserTypes = async (): Promise<Role[]> => {
+  const response = await axiosClient.get<Role[]>("/types");
   return response.data;
 };
 
@@ -79,14 +79,14 @@ const resetPassword = async (
 };
 
 const registerUser = async (data: UserRegistrationData) => {
-    const { firstName, lastName, email, Role, password, companyName } = data;
+    const { firstName, lastName, email, role, password, companyName } = data;
     const endpoint = companyName ? "/register-user" : "/"
 
     const requestBody ={
       firstName,
       lastName,
       email,
-      Role,
+      role,
       password,
       companyName,
   };
@@ -103,5 +103,5 @@ export default {
   loginUser,
   resetPassword,
   getUserTypes,
-  // registerUser
+  registerUser
 };
