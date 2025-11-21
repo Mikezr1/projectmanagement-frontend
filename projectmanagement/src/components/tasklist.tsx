@@ -52,10 +52,6 @@ const Tasklist = ({ projectId }: TasklistProps) => {
                 <tbody className="">
                     {sortedTasks?.map((task) => (
                         <tr key={task.id} className="border-4 border-black text-white rounded p-2">
-                            <th className="p-2">
-                                <input type="checkbox" />
-                            </th>
-
                             <td className="hover:underline p-2 border-r border-orange-600" onClick={() => handleToDetail(task.id)}>
                                 {task.title}
                             </td>
