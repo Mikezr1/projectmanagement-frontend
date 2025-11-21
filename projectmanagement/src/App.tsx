@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import LandingPage from "./pages/LandingPage";
 import LoginForm from "./pages/LoginPage_Odemian";
@@ -10,10 +10,10 @@ import TaskDetailPage from "./pages/TaskDetailPage";
 import { PrivateRoute } from "./PrivateRoute";
 
 function App() {
-  const queryClient = new QueryClient();
+  // const queryClient = new QueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>
+    // <QueryClientProvider client={queryClient}>
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<LandingPage />} />
@@ -30,7 +30,7 @@ function App() {
           />
         </Route>
       </Routes>
-    </QueryClientProvider>
+    // </QueryClientProvider>
   );
 }
 

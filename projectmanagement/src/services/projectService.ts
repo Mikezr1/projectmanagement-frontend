@@ -7,8 +7,25 @@ const axiosClient = axios.create({
     baseURL: API_BASE_PROJECT
 });
  
-const createProject = async (dto) => {
-    const response = await axios.post(`${API_BASE_PROJECT}`, dto);
+const createProject = async (title: string, userId: number) => {
+    const response = await axios.post(`${API_BASE_PROJECT}`, {
+        title,
+        userId
+    });
+    return response.data;
+}
+
+const addMembers = async (
+    projectId: number,
+    selectedDevelopers: number[],
+    selectedCustomer: number | null
+) => {
+    const userIds = [
+        ...selectedDevelopers,
+        ...(selectedCustomer !== null ? [selectedCustomer] : [])
+    ];
+    console.log("Sending users: ", userIds);
+    const response = await axios.post(`${API_BASE_PROJECT}/${projectId}/users`, userIds);
     return response.data;
 }
  
@@ -47,6 +64,7 @@ const deleteProject = async (id) => {
  
 export default {
     createProject,
+    addMembers,
     getAllProjects,
     getProjectsByUserId,
     getTasksByProjectId,

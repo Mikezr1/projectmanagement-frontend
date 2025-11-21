@@ -4,6 +4,7 @@ import projectService from "../services/projectService";
 import Tasklist from "../components/tasklist";
 import { useAuthStore } from "../stores/authStore";
 import type { ProjectSummaryDTO } from "../types/models";
+import AddMemberModal from "../modals/AddMemberModal";
 
 const ProjectDetailPage = () => {
     const { projectId } = useParams<{projectId: string }>();
@@ -13,9 +14,9 @@ const ProjectDetailPage = () => {
 
     // Project ophalen
     const { data: project, isLoading, isError, error } = useQuery<ProjectSummaryDTO, Error>({
-        queryKey: ["project", projectId],
-        queryFn: () => projectService.getProject(projectId),
-        enabled: !!user?.id && !!projectId,
+        queryKey: ["project", numericProjectId],
+        queryFn: () => projectService.getProject(numericProjectId),
+        enabled: !!user?.id && !!numericProjectId,
     });
 
     if (isLoading) return <p>Loading...</p>;
@@ -32,10 +33,10 @@ const ProjectDetailPage = () => {
 
                 {/* Sidebar */}
                 <div className="w-1/3 border-2 border-white border-t-0 p-4 flex flex-col">
-
-                    <button className="border border-white px-4 py-2 mb-2 hover:bg-white hover:text-black">
+                <AddMemberModal projectId={numericProjectId} />
+                    {/* <button className="border border-white px-4 py-2 mb-2 hover:bg-white hover:text-black">
                         Add member
-                    </button>
+                    </button> */}
                     <button className="border border-white px-4 py-2 hover:bg-white hover:text-black">
                         Add task
                     </button>

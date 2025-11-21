@@ -4,6 +4,7 @@ import projectService from "../services/projectService";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../stores/authStore";
 import { useState } from "react";
+import AddProjectModal from "../modals/AddProjectModal.tsx";
 
 const ProjectListPage = () => {
     const user = useAuthStore((state) => state.user);
@@ -41,10 +42,10 @@ const ProjectListPage = () => {
 
                 {/* Sidebar */}
                 <div className="w-1/3 border-2 border-white border-t-0 p-4 flex flex-col">
-
-                    <button className="border border-white px-4 py-2 mb-2 hover:bg-white hover:text-black">
+                    <AddProjectModal />
+                    {/* <button className="border border-white px-4 py-2 mb-2 hover:bg-white hover:text-black">
                         Add project
-                    </button>
+                    </button> */}
 
                     <button
                         className="border border-white px-4 py-2 hover:bg-white hover:text-black"

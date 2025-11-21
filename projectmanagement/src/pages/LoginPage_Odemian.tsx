@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { login } from "../stores/authStore.tsx";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import userService from "../services/userService";
 import { useModal } from "../modals/ModalContext.tsx";
 import ForgotPasswordModal from "../modals/ForgotPasswordModal.tsx";
