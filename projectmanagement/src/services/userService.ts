@@ -1,15 +1,26 @@
 import axios from "axios";
 import { API_BASE_USER } from "../components/constants";
 import type { UserLoginResponseDTO, UserSummaryDTO } from "../types/models";
+import { Role } from "../components/enums/Role";
 
 interface UserRegistrationData {
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
+  role: Role;
   password: string;
   companyName: string;
 }
+
+// interface FormData {
+//     firstName: string;
+//     lastName: string;
+//     email: string;
+//     role: string; // ENUMTYPE -> Dev / Project leader / Customer.
+//     password: string;
+//     confirmPassword?: string; 
+//     companyName: string;
+// }
 
 const axiosClient = axios.create({
   baseURL: API_BASE_USER,
@@ -31,8 +42,8 @@ const getAllUsers = async () => {
   return response.data;
 };
 
-const getUserTypes = async () => {
-  const response = await axiosClient.get("/types");
+const getUserTypes = async (): Promise<Role[]> => {
+  const response = await axiosClient.get<Role[]>("/types");
   return response.data;
 };
 
@@ -67,6 +78,22 @@ const resetPassword = async (
   return response.data;
 };
 
+const registerUser = async (data: UserRegistrationData) => {
+    const { firstName, lastName, email, role, password, companyName } = data;
+    const endpoint = companyName ? "/register-user" : "/"
+
+    const requestBody ={
+      firstName,
+      lastName,
+      email,
+      role,
+      password,
+      companyName,
+  };
+  const response = await axiosClient.post(endpoint, requestBody);
+  return response.data;
+};
+
 export default {
   createUser,
   getUserById,
@@ -76,4 +103,5 @@ export default {
   loginUser,
   resetPassword,
   getUserTypes,
+  registerUser
 };
