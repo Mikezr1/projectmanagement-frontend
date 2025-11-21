@@ -31,15 +31,32 @@ export default function CustomModal({
         overlayClassName={`custom-modal-overlay ${overlayStyle}`}
         className={`custom-modal-content ${size}`}
         closeTimeoutMS={0}
+        style={{
+          content: {
+            background: '#06061c',
+            color: 'white',
+            borderRadius: '12px',
+            padding: '1.25rem'
+          },
+          overlay: {
+            // optioneel: extra overlay inline styles
+          }
+        }}
         >
-            <div className="custom-modal-header">
-                {title && <h2>{title}</h2>}
-                <button onClick={onClose} aria-label='Close'>X</button>
-            </div>
+            <div className="custom-modal-header flex justify-between items-center border-b pb-2">
+        {title && <h2 className="text-xl font-bold">{title}</h2>}
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          className="text-xl font-bold hover:text-red-500"
+        >
+          ×
+        </button>
+      </div>
 
-            <div className='custom-modal-body'>{children}</div>
+            <div className='custom-modal-body mt-4'>{children}</div>
 
-            {footer && <div className='custom-modal-footer'>{footer}</div>}
+            {footer && <div className="custom-modal-footer mt-4 flex justify-end gap-2">{footer}</div>}
         </Modal>
     );
 }

@@ -37,7 +37,7 @@ const getUserById = async (id: string | number) => {
 };
 
 const getAllUsers = async () => {
-  const response = await axiosClient.get("/");
+  const response = await axios.get(API_BASE_USER);
   return response.data;
 };
 
