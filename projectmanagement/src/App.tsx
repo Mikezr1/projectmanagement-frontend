@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 // import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import "./App.css";
 import LandingPage from "./pages/LandingPage";
 import LoginForm from "./pages/LoginPage_Odemian";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
