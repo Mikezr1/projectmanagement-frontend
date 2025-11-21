@@ -2,16 +2,17 @@ import React, { type FC } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import userService from "../services/userService";
-import {  Role } from "../types/models";
+import {  Role, type UserRegistrationData } from "../types/models";
+import CustomModal from "./CustomModal";
 
-interface UserRegistrationData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: Role;
-  password: string;
-  companyName: string;
-}
+// interface UserRegistrationData {
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   role: Role;
+//   password: string;
+//   companyName: string;
+// }
 
 interface SignUpModalProps {
   isOpen: boolean;
@@ -61,9 +62,13 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h1>Sign Up</h1>
+    <CustomModal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Sign Up"
+      size="medium"
+      overlayStyle="dark"
+    >
         <form onSubmit={handleSubmit(onSubmit)} className="signup-form">
           <div className="signup-group">
             <label htmlFor="firstName"> First Name : </label>
@@ -187,8 +192,7 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
             Sign Up
           </button>
         </form>
-      </div>
-    </div>
+      </CustomModal>
   );
 };
 export default SignUpModal;

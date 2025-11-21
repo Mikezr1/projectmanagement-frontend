@@ -1,7 +1,6 @@
 import axios from "axios";
 import { API_BASE_USER } from "../components/constants";
-import type { UserLoginResponseDTO, UserSummaryDTO } from "../types/models";
-import { Role } from "../components/enums/Role";
+import type { UserLoginResponseDTO, UserSummaryDTO, Role } from "../types/models";
 
 interface UserRegistrationData {
   firstName: string;
@@ -27,7 +26,7 @@ const axiosClient = axios.create({
 });
 
 const createUser = async (dto: UserRegistrationData) => {
-  const response = await axiosClient.post("/", dto);
+  const response = await axiosClient.post("", dto);
   return response.data;
 };
 

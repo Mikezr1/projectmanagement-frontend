@@ -7,7 +7,7 @@ export interface CommentCreateDTO {
     taskId: number;
     userId: number;
 }
-interface UserRegistrationData {
+export interface UserRegistrationData {
   firstName: string;
   lastName: string;
   email: string;
@@ -145,7 +145,7 @@ export interface UserUpdateRoleDTO {
 export type Status = "CREATED" | "TODO" | "IN_PROGRESS" | "DONE" | "TESTING" | "BUG_FIXES";
 
 export enum Role{
-    PROJECT_LEADER = "Project_Leader",
-    DEVELOPER = "Developer",
-    CUSTOMER = "Customer"
+    PROJECT_LEADER = "PROJECT_LEADER",
+    DEVELOPER = "DEVELOPER",
+    CUSTOMER = "CUSTOMER"
 }
