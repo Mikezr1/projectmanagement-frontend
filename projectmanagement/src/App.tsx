@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./App.css";
 import LandingPage from "./pages/LandingPage";
@@ -8,12 +9,15 @@ import ProjectListPage from "./pages/ProjectListPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import TaskDetailPage from "./pages/TaskDetailPage";
 import { PrivateRoute } from "./PrivateRoute";
+import NavBar from "./components/NavBar";
+
 
 function App() {
   // const queryClient = new QueryClient();
 
   return (
-    // <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <NavBar/>
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<LandingPage />} />

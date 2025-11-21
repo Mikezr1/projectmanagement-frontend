@@ -7,6 +7,23 @@ export interface CommentCreateDTO {
     taskId: number;
     userId: number;
 }
+export interface UserRegistrationData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: Role;
+  password: string;
+  companyName: string;
+}
+// interface FormData {
+//     firstName: string;
+//     lastName: string;
+//     email: string;
+//     role: string; // ENUMTYPE -> Dev / Project leader / Customer.
+//     password: string;
+//     confirmPassword?: string; 
+//     companyName: string;
+// }
 
 export interface CommentSummaryDTO {
     id: number;
@@ -108,7 +125,6 @@ export interface UserLoginResponseDTO {
 export interface UserSummaryDTO {
     id: number;
     firstName: string;
-    lastName: string;
     email: string;
     role: Role;
 }
@@ -128,4 +144,8 @@ export interface UserUpdateRoleDTO {
 
 export type Status = "CREATED" | "TODO" | "IN_PROGRESS" | "DONE" | "TESTING" | "BUG_FIXES";
 
-export type Role = "PROJECT_LEADER" | "DEVELOPER" | "CUSTOMER";
+export enum Role{
+    PROJECT_LEADER = "PROJECT_LEADER",
+    DEVELOPER = "DEVELOPER",
+    CUSTOMER = "CUSTOMER"
+}
