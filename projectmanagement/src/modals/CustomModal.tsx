@@ -33,7 +33,7 @@ export default function CustomModal({
         closeTimeoutMS={0}
         style={{
           content: {
-            background: 'black',
+            background: '#06061c',
             color: 'white',
             borderRadius: '12px',
             padding: '1.25rem'
