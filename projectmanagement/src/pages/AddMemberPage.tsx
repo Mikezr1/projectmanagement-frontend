@@ -99,7 +99,7 @@ const AddMemberPage = ({ projectId}: AddMemberPageProps) => {
                         ))}
                     </select>
             </div>
-            <button type="submit">Add members</button>
+            <button className="px-2 mt-4 border-1 text-white p-2 rounded bg-black hover:bg-white hover:text-black"type="submit">Add members</button>
         </form>
     )
 }
