@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import  SignUpModal  from './modals/SignUpModal';
-import './App.css'
-import Modal from 'react'
-import CustomModal from '../modals/CustomModal';
-import {  SignUpModal } from './modals/SignUpModal';
+import SignUpModal from '../modals/SignUpModal';
 
 
 const NavBar = () => {
@@ -21,9 +16,9 @@ const NavBar = () => {
           </div>
           <h1 className="NavBar-title">ProjectManager Pro</h1>
         </div>
-        {/* <button className="signup-button" onClick={openModal}>Sign up</button> */}
+        <button className="signup-button" onClick={openModal}>Sign up</button>
       </nav>
-      {/* <SignUpModal isOpen={isModalOpen} onClose={closeModal}/> */}
+      <SignUpModal isOpen={isModalOpen} onClose={closeModal}/>
     </>
   );
 };

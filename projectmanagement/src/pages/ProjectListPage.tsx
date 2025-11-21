@@ -97,9 +97,9 @@ const ProjectListPage = () => {
                 {/* Project List */}
                 <div className="w-2/3 max-w-[800px]  border-t-0 border-l-0 p-4">
                     {/* Breadcrumb */}
-                    <div className="text-sm mb-4 text-gray-500 flex items-center gap-2">
+                    <div className="text-sm mb-4 text-white flex items-center gap-2">
                         <p>Projects</p>
-                        <span>{">"}</span>
+                        <span className="text-white">{">"}</span>
                     </div>
 
                     {projects?.map((project) => (

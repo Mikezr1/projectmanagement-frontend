@@ -10,6 +10,7 @@ import TaskEditForm from "../components/TaskEditForm";
 import NavBar from "../components/NavBar";
 import { useAuthStore } from "../stores/authStore";
 import TaskDelete from "../components/TaskDelete";
+import { updateTaskCache } from "../components/reactQueryHelpers";
 
 const TaskDetailPage = () => {
     const navigate = useNavigate();
@@ -42,8 +43,8 @@ const TaskDetailPage = () => {
     const updateStatusMutation = useMutation({
         mutationFn: ({ id, newStatus }: { id: number; newStatus: string }) =>
             taskService.updateTask(id, { status: newStatus }),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["task", taskId] });
+        onSuccess: (updatedTask) => {
+            updateTaskCache(queryClient, updatedTask);
         },
     });
 
@@ -53,14 +54,15 @@ const TaskDetailPage = () => {
 
     // --- Mutation to add comment ---
     const addCommentMutation = useMutation({
-        mutationFn: (description: string) =>
+        mutationFn: () =>
             commentService.createComment({
+                description: newComment,
                 taskId: Number(taskId),
-                userId: 1, // Pas dit aan naar ingelogde user
-                description,
+                userId: user?.id, // Pas dit aan naar ingelogde user
+                
             }),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["task", taskId] }); // refresh task met comments
+            queryClient.invalidateQueries({ queryKey: ["task", taskId]});
             setNewComment("");
         },
     });
@@ -69,7 +71,7 @@ const TaskDetailPage = () => {
     const deleteCommentMutation = useMutation({
         mutationFn: (commentId: number) => commentService.deleteComment(commentId),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["task", taskId] });
+            queryClient.invalidateQueries({ queryKey: ["task", taskId]});
         },
     });
 
@@ -113,7 +115,7 @@ const TaskDetailPage = () => {
                 </div>
             </div>
 
-            <div className="flex bg-black text-white h-[800px]">
+            <div className="flex bg-black text-white">
                 {/* Sidebar */}
                 <div className="w-1/3 max-w-[400px] bg-blue-900 rounded p-4 m-4 flex flex-col">
                     <TaskEditForm task={task} statuses={statuses ?? []} />
@@ -131,7 +133,7 @@ const TaskDetailPage = () => {
                 </div>
 
                 {/* Main content */}
-                <div className="w-2/3 max-w-[800px]  border-t-0 border-l-0 p-4">
+                <div className="w-2/3 max-w-[800px] h-full  border-t-0 border-l-0 p-4">
                     <main>
                         <GoToProject projectId={projectId!} task={task} />
 
@@ -173,7 +175,7 @@ const TaskDetailPage = () => {
                                 onSubmit={(e) => {
                                     e.preventDefault();
                                     if (!newComment.trim()) return;
-                                    addCommentMutation.mutate(newComment);
+                                    addCommentMutation.mutate();
                                 }}
                                 className="mb-4"
                             >
@@ -186,7 +188,7 @@ const TaskDetailPage = () => {
                                 />
                                 <button
                                     type="submit"
-                                    disabled={addCommentMutation.isLoading}
+                                    disabled={addCommentMutation.status === "pending"}
                                     className="border-2 rounded p-2 hover:bg-white hover:text-black"
                                 >
                                     Add Comment

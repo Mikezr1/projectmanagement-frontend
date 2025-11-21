@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { TaskSummaryDTO } from "../types/models";
 import taskService from "../services/taskService";
+import { updateTaskCache } from "./reactQueryHelpers";
 
 interface TaskEditFormProps {
     task: TaskSummaryDTO;
@@ -19,11 +20,18 @@ const TaskEditForm = ({ task, statuses }: TaskEditFormProps) => {
     mutationFn: ({ id, title, description, status }: { id: number; title: string; description: string; status: string }) =>
         taskService.updateTask(id, { title, description, status }),
     onSuccess: (updatedTask) => {
-        // Cache voor de specifieke task verversen
-        queryClient.invalidateQueries({ queryKey: ["task", updatedTask.id] });
-        // Cache voor alle tasks van het project verversen
-        queryClient.invalidateQueries({ queryKey: ["tasks", task.project.id] });
-        setIsEditing(false); // sluit het edit form
+        queryClient.setQueryData(["task", updatedTask.id], (old: TaskSummaryDTO | undefined) => {
+            if (!old) return updatedTask;
+
+            return {
+                ...updatedTask,
+                status: updatedTask.status ?? old.status,
+                comments: old.comments,
+            };
+        });
+
+        updateTaskCache(queryClient, updatedTask);
+        setIsEditing(false);
     },
 });
 
