@@ -1,8 +1,26 @@
 import axios from "axios";
 import { API_BASE_TASK } from "../components/constants";
+// import type { TaskCreateDTO } from "../types/models";
 
-const createTask = async (dto) => {
-    const response = await axios.post(`${API_BASE_TASK}`, dto);
+const createTask = async (
+    title: string,
+    description: string,
+    status: "CREATED",
+    userId: number,
+    projectId: number,
+) => {
+    const dto = { title, description, status, userId, projectId };
+    console.log(projectId);
+    console.log("DTO SENT:", JSON.stringify(dto, null, 2));
+    console.log("ENDPOINT:", API_BASE_TASK);
+
+    const response = await axios.post(`${API_BASE_TASK}`, dto,
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            }
+        });
     return response.data;
 }
 
