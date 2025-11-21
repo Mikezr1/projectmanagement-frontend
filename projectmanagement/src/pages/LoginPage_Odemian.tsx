@@ -46,21 +46,24 @@ const LoginForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
-            <button type="submit">Login</button>
+            <button className="pr-2 border-1 text-white p-2 rounded bg-black hover:bg-gray-200 hover:text-black" type="submit">Login</button>
             <button
             type="button"
+            className="pr-2 border-1 text-white p-2 rounded bg-black hover:bg-white hover:text-black"
             onClick={() => {
                 setEmail("")
                 setPassword("")
             }} >
             Reset
             </button>
-            <button type="button" onClick={() => {
+            <div className="flex">
+                <ForgotPasswordModal />
+            </div>
+            <button className="flex" type="button" onClick={() => {
                 hideModal();
                 navigate("/")
             }}
             >Back</button>
-            <ForgotPasswordModal />
             {/* <div className="text-left">
             <Link to="/forgot-password">Forgot password?</Link>
             </div> */}
