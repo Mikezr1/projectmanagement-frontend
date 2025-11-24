@@ -6,6 +6,7 @@ import { useAuthStore } from "../stores/authStore";
 import type { ProjectSummaryDTO } from "../types/models";
 import AddMemberModal from "../modals/AddMemberModal";
 import AddTaskModal from "../modals/AddTaskModal";
+import DeleteMemberModal from "../modals/DeleteMemberModal";
 
 const ProjectDetailPage = () => {
     const { projectId } = useParams<{ projectId: string }>();
@@ -78,10 +79,11 @@ const ProjectDetailPage = () => {
             <div className="flex bg-black text-white h-[800px]">
 
                 {/* Sidebar */}
-                <div className="w-1/3 max-w-[400px] bg-blue-900 rounded p-4 m-4 flex flex-col">
+                <div className="w-1/3 max-w-[400px] h-full bg-blue-900 rounded p-4 m-4 flex flex-col">
                     {/* <div className="flex flex-col gap-2 mt-2"> */}
                     {user.role !== "CUSTOMER" && <AddMemberModal projectId={numericProjectId} />}
                     {user.role !== "CUSTOMER" && <AddTaskModal projectId={numericProjectId} />}
+                    {user.role === "PROJECT_LEADER" && <DeleteMemberModal projectId={numericProjectId} />}
                     {/* </div> */}
                     <p className="text-2xl pt-10 mt-6">Role list</p>
 
