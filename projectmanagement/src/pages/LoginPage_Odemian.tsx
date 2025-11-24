@@ -26,7 +26,7 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleFormSubmit}>
-            <div className="py-2">
+            <div className="py-2 flex gap-12">
                 <label htmlFor="email">Email: </label>
                 <input
                     type="text"
@@ -37,7 +37,7 @@ const LoginForm = () => {
                     onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
-            <div className="pt-2 pb-4">
+            <div className="pt-2 pb-4 flex gap-4">
                 <label htmlFor="password">Password: </label>
                 <input
                     type="password"
