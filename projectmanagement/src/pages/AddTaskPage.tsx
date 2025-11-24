@@ -33,6 +33,7 @@ const AddTaskPage = ({ projectId }: AddTaskPageProps) => {
                 queryKey: ["project"],
             });
             hideModal();
+            window.location.reload();
         } catch (error: any) {
             alert(error.response?.data || error.message);
         }
