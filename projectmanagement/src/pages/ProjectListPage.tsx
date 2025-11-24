@@ -73,7 +73,7 @@ const ProjectListPage = () => {
 
                 {/* Sidebar */}
                 <div className="w-1/3 max-w-[400px] bg-blue-900 rounded p-4 m-4 flex flex-col">
-                    <div className="flex flex-col gap-2 mt-2">
+                    <div className="flex flex-col gap-2">
                         {user.role === "PROJECT_LEADER" && <AddProjectModal />}
                         {user.role === "PROJECT_LEADER" &&
                         <button
@@ -97,9 +97,9 @@ const ProjectListPage = () => {
                 {/* Project List */}
                 <div className="w-2/3 max-w-[800px]  border-t-0 border-l-0 p-4">
                     {/* Breadcrumb */}
-                    <div className="text-sm mb-4 text-gray-500 flex items-center gap-2">
+                    <div className="text-sm mb-4 text-white flex items-center gap-2">
                         <p>Projects</p>
-                        <span>{">"}</span>
+                        <span className="text-white">{">"}</span>
                     </div>
 
                     {projects?.map((project) => (
