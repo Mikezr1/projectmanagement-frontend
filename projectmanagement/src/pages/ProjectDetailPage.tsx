@@ -14,8 +14,6 @@ const ProjectDetailPage = () => {
     const { user } = useAuthStore();
     const navigate = useNavigate();
 
-
-    // Project ophalen
     const { data: project, isLoading, isError, error } = useQuery<ProjectSummaryDTO, Error>({
         queryKey: ["project", numericProjectId],
         queryFn: () => projectService.getProject(numericProjectId),
@@ -49,6 +47,7 @@ const ProjectDetailPage = () => {
                         </button>
 
                         <span className="text-white">Hi, {user.firstName}</span>
+                        {/* <span className="text-white">Hi, {user.firstName} {user.lastName}</span> */}
                         <button
                             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
                             type="button"
@@ -68,10 +67,10 @@ const ProjectDetailPage = () => {
 
                 {/* Sidebar */}
                 <div className="w-1/3 max-w-[400px] bg-blue-900 rounded p-4 m-4 flex flex-col">
-                    <div className="flex flex-col gap-2 mt-2">
-                        <AddMemberModal projectId={numericProjectId} />
-                        <AddTaskModal projectId={numericProjectId} />
-                    </div>
+                    {/* <div className="flex flex-col gap-2 mt-2"> */}
+                        {user.role !== "CUSTOMER" && <AddMemberModal projectId={numericProjectId} />}
+                        {user.role !== "CUSTOMER" && <AddTaskModal projectId={numericProjectId} />}
+                    {/* </div> */}
                     <p className="text-2xl pt-10 mt-6">Role list</p>
 
                     <div className="flex flex-col gap-2 mt-2">

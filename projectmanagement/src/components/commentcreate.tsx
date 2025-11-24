@@ -43,13 +43,13 @@ const CommentCreate = ({ setComment, projectId }: CommentCreate) => {
 
     return (
         <>
-            <h3>plaats een comment</h3>
+            <h3>Place a comment</h3>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="content">Inhoud:</label>
                     <input type="text" id="content" name="content" value={comment.content} onChange={handleChange} />
                 </div>
-                <button type="submit" disabled={createComment.isPending}>plaats comment</button>
+                <button type="submit" disabled={createComment.isPending}>Place comment</button>
                 <button onClick={() => setComment(0)}> return</button>
             </form> 
         </>

@@ -57,7 +57,7 @@ export interface ProjectUpdateDTO {
 export interface TaskCreateDTO {
     title: string;
     description: string;
-    status: Status;
+    status: "CREATED" | "TODO" | "IN PROGRESS" | "DONE" | "TESTING" | "BUG FIXES",
     userId: number;
     projectId: number;
 }
@@ -128,4 +128,8 @@ export interface UserUpdateRoleDTO {
 
 export type Status = "CREATED" | "TODO" | "IN_PROGRESS" | "DONE" | "TESTING" | "BUG_FIXES";
 
-export type Role = "PROJECT_LEADER" | "DEVELOPER" | "CUSTOMER";
+export enum Role {
+    PROJECT_LEADER = "PROJECT_LEADER",
+    DEVELOPER = "DEVELOPER",
+    CUSTOMER = "CUSTOMER"
+}

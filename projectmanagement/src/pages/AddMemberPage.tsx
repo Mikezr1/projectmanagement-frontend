@@ -28,13 +28,23 @@ const AddMemberPage = ({ projectId}: AddMemberPageProps) => {
     const queryClient = useQueryClient();
 
     const { data: users, isLoading, isError, error } = useQuery<User[], Error>({
-            queryKey: ["users"],
-            queryFn: () => userService.getAllUsers(),
-            enabled: !!user?.id,
+    // const { data: users, isLoading: isUsersLoading, isError: isUsersError, error: usersError } = useQuery<User[], Error>({
+        queryKey: ["users"],
+        queryFn: () => userService.getAllUsers(),
+        enabled: !!user?.id,
         });
     
+    // const { data: project, isLoading: isProjectLoading, isError: isProjectError, error: projectError } = useQuery({
+    //     queryKey: ["project", projectId],
+    //     queryFn: () => projectService.getProject(projectId),
+    //     enabled: !!user?.id
+    // });
+    
+    // const existingUserIds = project?.users?.map(u => u.id) ?? [];
     const developers = users?.filter(u => u.role === "DEVELOPER") ?? [];
     const customers = users?.filter(u => u.role === "CUSTOMER") ?? [];
+    // const availableDevelopers = developers.filter(dev => !existingUserIds.includes(dev.id));
+    // const availableCustomers = customers.filter(c => !existingUserIds.includes(u => u.id));
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -61,9 +71,10 @@ const AddMemberPage = ({ projectId}: AddMemberPageProps) => {
         }
     }
 
-    if (isLoading) return <p>Loading users...</p>;
-    
-    if (isError) return <p>Error loading users: {error.message}</p>;
+    if ( isLoading) return <p>Loading users...</p>;
+    // if ( isUsersLoading || isProjectLoading) return <p>Loading users... || Loading project...</p>;
+    if ( isError ) return <p>Error loading users: {error.message }</p>
+    // if ( isUsersError || isProjectError ) return <p>Error loading users: {usersError.message } || Error loading project {projectError.message}</p>;
 
     return (
         <form onSubmit={handleSubmit}>
@@ -90,6 +101,7 @@ const AddMemberPage = ({ projectId}: AddMemberPageProps) => {
                 <label htmlFor="customer">Customer: </label>
                 <select
                     id="customer"
+                    className="bg-black text-white border border-gray-700 rounded px-3 py-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     value={selectedCustomer ?? ""}
                     onChange={(e) => setSelectedCustomer(Number(e.target.value)
                     )}>

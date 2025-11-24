@@ -2,93 +2,90 @@ import React, { type FC } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import userService from "../services/userService";
-import type { UserRegistrationData } from "../types/models";
+import { Role } from "../types/models";
+// import type { UserRegistrationData } from "../types/models";
+import CustomModal from "./CustomModal";
+import { useModal } from "./ModalContext";
+
+interface UserRegistrationData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: Role;
+  companyName: string;
+}
 
 interface SignUpModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
 const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
+  const { hideModal } = useModal();
   const queryClient = useQueryClient();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    //watch,
   } = useForm<UserRegistrationData>({
     defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
-      role: "",
       password: "",
+      role: Role.DEVELOPER,
       companyName: "",
     },
   });
-
-  const {
-    data: role,
-    isLoading: loadingTypes,
-  }: { data?: string[]; isLoading: boolean } = useQuery({
-    queryKey: ["user"],
+  const { data: roles, isLoading: loadingTypes } = useQuery({
+    queryKey: ["Role"],
     queryFn: userService.getUserTypes,
     enabled: isOpen,
   });
-  const registerMutation = useMutation({
-    mutationFn: userService.createUser,
+  const registerMutation = useMutation<void, Error, UserRegistrationData>({
+    mutationFn: (userData) => userService.createUser(userData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["Role"] });
+      hideModal();
       alert(
-        "Registratie voltooid. Sluit dit scherm om vervolgens in te loggen."
+        "Registration completed. You can now log in."
       );
       reset();
-      onClose();
     },
-    onError: (error: any) => {
+    onError: (error) => {
       console.error(error); // <- log for debugging
-      alert(
-        `Registratie mislukt: ${error.response?.data?.message || error.message}`
-      );
+      alert(`Registration failed: ${error.message}`);
     },
   });
-
   const onSubmit: SubmitHandler<UserRegistrationData> = (data) => {
-    const { ...userData } = data;
-    registerMutation.mutate(userData);
+    registerMutation.mutate({
+      ...data,
+      email: data.email.toLowerCase(),
+    })
   };
-
-  //const password = watch("password");
 
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="ModalHeader">
-          <h1>Sign Up</h1>
-          <button className="close-button" onClick={onClose}>
-            &times;
-          </button>
-        </div>
+    <CustomModal
+      isOpen={isOpen}
+      onClose={() => {
+        hideModal();
+        onClose?.();
+      }}
+      title="Sign Up"
+      size="medium"
+      overlayStyle="dark"
+    >
         <form onSubmit={handleSubmit(onSubmit)} className="signup-form">
           <div className="signup-group">
             <label htmlFor="firstName"> First Name : </label>
             <input
-              type="text"
-              id="firstName"
-              {...register("firstName", {
-                required: "Veld Verplicht",
-                minLength: { value: 2, message: "minimum of 2 chars" },
-              })}
-              placeholder="First name"
-              className={errors.firstName ? "input error " : ""}
+              {...register("firstName", { required: true })}
+              placeholder="First Name"
             />
-            {errors.firstName && (
-              <span className="error-message">{errors.firstName.message}</span>
-            )}
+            {errors.firstName && <span>{errors.firstName.message}</span>}
           </div>
           <div className="signup-group">
             <label htmlFor="lastName"> Last Name : </label>
@@ -96,7 +93,7 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
               type="text"
               id="lastName"
               {...register("lastName", {
-                required: "Veld Verplicht",
+                required: "Field required",
                 minLength: { value: 2, message: "minimum of 2 chars" },
               })}
               placeholder="Last name"
@@ -112,7 +109,7 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
               type="text"
               id="email"
               {...register("email", {
-                required: "Veld Verplicht",
+                required: "Field required",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: "Ongeldig email adres.",
@@ -127,18 +124,17 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
           </div>
           {/* sign up userType enum! */}
           <div className="form-group">
-            <label htmlFor="role">Role : *</label>
+            <label htmlFor="role">Role :</label>
             <select
               id="role"
               {...register("role", {
-                required: "Selecteer een gebruikerstype",
+                required: "Select a Role",
               })}
-              className={errors.role ? "input-error" : ""}
-              disabled={loadingTypes}
+              className="bg-black text-white border border-gray-700 rounded px-3 py-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="">Selecteer Rol</option>
-              {role && role.length > 0 ? (
-                role.map((type) => (
+              <option value="">Select a Role</option>
+              {roles && roles.length > 0 ? (
+                roles.map((type) => (
                   <option key={type} value={type}>
                     {type === "DEVELOPER" && "Developer"}
                     {type === "PROJECT_LEADER" && "Project Leader"}
@@ -149,7 +145,6 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
                 <option disabled>No roles available</option>
               )}
             </select>
-
             {errors.role && (
               <span className="error-message">{errors.role.message}</span>
             )}
@@ -161,7 +156,7 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
               type="text"
               id="companyName"
               {...register("companyName", {
-                required: "Veld Verplicht",
+                required: "Field required",
                 minLength: { value: 2, message: "minimum of 2 chars" },
               })}
               placeholder="Company Name"
@@ -173,7 +168,6 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
               </span>
             )}
           </div>
-          ...
           {/* Password section */}
           <div className="signup-group">
             <label htmlFor="password"> Password : </label>
@@ -181,7 +175,7 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
               type="password"
               id="password"
               {...register("password", {
-                required: "Veld Verplicht",
+                required: "Field required",
                 minLength: { value: 6, message: "minimum of 6 chars" },
               })}
               placeholder="Password"
@@ -192,24 +186,30 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
             )}
           </div>
           {/* <div className='signup-group'>
-                      <label htmlFor="confirmPassword"> Confirm Password : </label>
-                      <input type="password" id='confirmPassword' {...register("confirmPassword", {
+<label htmlFor="confirmPassword"> Confirm Password : </label>
+<input type="password" id='confirmPassword' {...register("confirmPassword", {
                           required: "Veld Verplicht",
                           validate: (value) => value === password || "Passwords do not match"
-                      })} 
+                      })}
                       placeholder='Confirm Password'
                       className={errors.confirmPassword ? 'input error ' : ""}
                       />
                       {errors.confirmPassword && <span className='error-message'>{errors.confirmPassword.message}</span>}
-                  </div> */}
+</div> */}
           {/* submit button */}
-          <button type="submit" className="submit-button">
+          <button type="submit" className="pr-2 mr-2 border-1 text-white p-2 rounded bg-black hover:bg-gray-200 hover:text-black">
             Sign Up
           </button>
+          <button type="button" className="pr-2 mr-2 border-1 text-white p-2 rounded bg-black hover:bg-gray-200 hover:text-black"onClick={hideModal}>Back</button>
         </form>
-      </div>
-    </div>
+        <div className="flex justify-end mt-4">
+          <button
+            onClick={hideModal} 
+            className="px-4 py-2" >
+            Close
+          </button>
+        </div>
+      </CustomModal>
   );
 };
-
 export default SignUpModal;

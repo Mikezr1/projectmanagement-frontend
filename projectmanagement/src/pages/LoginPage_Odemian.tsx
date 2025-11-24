@@ -63,11 +63,11 @@ const LoginForm = () => {
             <div className="flex py-2">
                 <ForgotPasswordModal />
             </div>
-            <button className="flex" type="button" onClick={() => {
+            {/* <button className="flex" type="button" onClick={() => {
                 hideModal();
-                navigate("/")
+                // navigate("/")
             }}
-            >Back</button>
+            >Back</button> */}
             {/* <div className="text-left">
             <Link to="/forgot-password">Forgot password?</Link>
             </div> */}

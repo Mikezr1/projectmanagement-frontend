@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import userService from "../services/userService";
+import { useModal } from "../modals/ModalContext";
 
 
 const ForgotPasswordPage = () => {
@@ -8,6 +9,7 @@ const ForgotPasswordPage = () => {
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
+    const { hideModal } = useModal();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -47,7 +49,7 @@ const ForgotPasswordPage = () => {
             />
             <div className="pt-2">
                 <button className="pr-2 mr-2 border-1 text-white p-2 rounded bg-black hover:bg-gray-200 hover:text-black" type="submit">Continue</button>
-                <button className="pr-2 mr-2 border-1 text-white p-2 rounded bg-black hover:bg-gray-200 hover:text-black" type="submit" type="button" onClick={() => { navigate("/login") }}>Back</button>
+                <button className="pr-2 mr-2 border-1 text-white p-2 rounded bg-black hover:bg-gray-200 hover:text-black" type="button" onClick={hideModal}>Back</button>
             </div>
         </form>
     )

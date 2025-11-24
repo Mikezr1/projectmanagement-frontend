@@ -6,8 +6,8 @@ interface UserRegistrationData {
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
   password: string;
+  role: string;
   companyName: string;
 }
 
@@ -16,7 +16,7 @@ const axiosClient = axios.create({
 });
 
 const createUser = async (dto: UserRegistrationData) => {
-  const response = await axiosClient.post("/", dto);
+  const response = await axiosClient.post("", dto);
   return response.data;
 };
 
@@ -32,7 +32,7 @@ const getAllUsers = async () => {
 };
 
 const getUserTypes = async () => {
-  const response = await axiosClient.get("/types");
+  const response = await axiosClient.get("/roles");
   return response.data;
 };
 
