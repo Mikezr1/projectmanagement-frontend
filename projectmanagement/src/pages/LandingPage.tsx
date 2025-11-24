@@ -25,9 +25,9 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
-        <div className="py-10 bg-black rounded flex items-center">
+        <div className="py-10 bg-gray-950 m-4 rounded flex items-center">
             <div className="grid grid-cols-2 gap-8">
-                <div className="flex flex-col align-left pl-8 gap-4">
+                <div className="flex justify-center mx-auto px-20 flex-col align-left gap-4">
                     <h3 className="text-bold text-2xl text-white">Start managing your projects</h3>
                     <p className="text-sm text-white">
                         This application will help you manage your projects better then ever before.
