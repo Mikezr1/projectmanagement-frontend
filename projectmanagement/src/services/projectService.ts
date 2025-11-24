@@ -61,6 +61,15 @@ const deleteProject = async (id) => {
     const response = await axios.delete(`${API_BASE_PROJECT}/${id}`);
     return response.data;
 }
+
+const deleteMembers = async (projectId: number, memberIds: number[]) => {
+    console.log("Deleting users:", memberIds);
+    const response = await axios.delete(`${API_BASE_PROJECT}/${projectId}/users`, {
+        data: memberIds
+    });
+    return response.data;
+};
+
  
 export default {
     createProject,
@@ -70,6 +79,7 @@ export default {
     getTasksByProjectId,
     getProject,
     updateProject,
-    deleteProject
+    deleteProject,
+    deleteMembers
 }
  
