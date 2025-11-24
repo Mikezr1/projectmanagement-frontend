@@ -11,7 +11,7 @@ export default function AddProjectModal({ projectId }: AddTaskModalProps) {
     const openModal = () => {
         if (modal?.isOpen) return;
         showModal({
-            title: "Add Project",
+            title: "Add Task",
             context: <AddTaskPage projectId={projectId}/>,
             footer: <button onClick={hideModal}>Close</button>,
             size: "medium",
