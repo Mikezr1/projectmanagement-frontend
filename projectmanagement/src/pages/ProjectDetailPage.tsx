@@ -20,8 +20,20 @@ const ProjectDetailPage = () => {
         enabled: !!user?.id && !!numericProjectId,
     });
 
+    const { data: tasks, isLoading: tasksLoading } = useQuery({
+        queryKey: ["tasks", numericProjectId],
+        queryFn: () => projectService.getTasksByProjectId(numericProjectId),
+        enabled: !!numericProjectId,
+    });
+
+    if (isLoading || tasksLoading) return <p>Loading...</p>;
     if (isLoading) return <p>Loading...</p>;
     if (isError || !project) return <p>Error: {error?.message}</p>;
+
+    const totalTasks = tasks?.length ?? 0;
+    const doneTasks = tasks?.filter(task => task.status?.toLowerCase() === "done").length ?? 0;
+    const donePercentage = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+
 
     return (
         <div className="w-auto h-full flex flex-col">
@@ -53,7 +65,7 @@ const ProjectDetailPage = () => {
                             type="button"
                             onClick={() => {
                                 localStorage.removeItem("token");
-                                navigate("/");                
+                                navigate("/");
                             }}
                         >
                             Logout
@@ -68,8 +80,8 @@ const ProjectDetailPage = () => {
                 {/* Sidebar */}
                 <div className="w-1/3 max-w-[400px] bg-blue-900 rounded p-4 m-4 flex flex-col">
                     {/* <div className="flex flex-col gap-2 mt-2"> */}
-                        {user.role !== "CUSTOMER" && <AddMemberModal projectId={numericProjectId} />}
-                        {user.role !== "CUSTOMER" && <AddTaskModal projectId={numericProjectId} />}
+                    {user.role !== "CUSTOMER" && <AddMemberModal projectId={numericProjectId} />}
+                    {user.role !== "CUSTOMER" && <AddTaskModal projectId={numericProjectId} />}
                     {/* </div> */}
                     <p className="text-2xl pt-10 mt-6">Role list</p>
 
@@ -85,16 +97,51 @@ const ProjectDetailPage = () => {
                         ))}
                     </div>
 
+                    {/* Progress sidebar */}
+                    <div className="flex text-2xl my-2 justify-between">
+                        <p>Progress</p>
+                        <p>{donePercentage}%</p>
+                    </div>
+                    <div className={`
+                    flex justify-between
+                    p-2 rounded 
+                    ${totalTasks > 0 && doneTasks === totalTasks
+                            ? "bg-green-700 text-black"
+                            : "bg-gray-800"}
+                        `}
+                    >
+                        <div className="flex flex-col">
+                            <div className="flex justify-between space-x-2">
+                                <span>Tasks total:</span>
+                                <span>{totalTasks}</span>
+                            </div>
+                            <div className="flex justify-between space-x-2">
+                                <span>Tasks done:</span>
+                                <span>{doneTasks}</span>
+                            </div>
+                        </div>
+
+                        {totalTasks > 0 && doneTasks === totalTasks && (
+                            <div className="flex items-center">
+                                <img
+                                    src="/src/assets/confetti.png" // zet je PNG in public folder
+                                    alt="Confetti celebration"
+                                    className="w-10 h-10 z-50"
+                                />
+                            </div>
+                        )}
+                    </div>
+
                 </div>
 
                 {/* Main content */}
                 <div className="w-2/3 max-w-[800px]  border-t-0 border-l-0 p-4">
 
                     {/* Breadcrumb */}
-                    <div className="text-sm mb-4 text-gray-500 flex items-center gap-2">
+                    <div className="text-sm mb-4 text-white flex items-center gap-2">
                         <NavLink to="/projects">Projects</NavLink>
-                        <span>{">"}</span>
-                        <span className="text-white font-semibold">{project.title}</span>
+                        <span className="text-white">{">"}</span>
+                        <span className="text-white">{project.title}</span>
                     </div>
 
                     {/* Title */}
