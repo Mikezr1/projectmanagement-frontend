@@ -113,7 +113,7 @@ const TaskDetailPage = () => {
                 </div>
             </div>
 
-            <div className="flex bg-black text-white h-[800px]">
+            <div className="flex bg-black text-white">
                 {/* Sidebar */}
                 <div className="w-1/3 max-w-[400px] bg-blue-900 rounded p-4 m-4 flex flex-col">
                     <TaskEditForm task={task} statuses={statuses ?? []} />
@@ -131,7 +131,7 @@ const TaskDetailPage = () => {
                 </div>
 
                 {/* Main content */}
-                <div className="w-2/3 max-w-[800px]  border-t-0 border-l-0 p-4">
+                <div className="w-2/3 max-w-[800px] border-t-0 border-l-0 p-4">
                     <main>
                         <GoToProject projectId={projectId!} task={task} />
 
