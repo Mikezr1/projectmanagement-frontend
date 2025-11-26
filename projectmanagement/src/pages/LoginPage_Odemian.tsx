@@ -17,7 +17,7 @@ const LoginForm = () => {
             const user = await userService.loginUser(email.trim().toLowerCase(), password.trim());
 
             login(user);
-            alert("Welcome " + user.firstName + "!");
+            // alert("Welcome " + user.firstName + "!");
             navigate("/projects");
         } catch (error) {
             alert("Invalid email or password!");
@@ -25,23 +25,25 @@ const LoginForm = () => {
     }
 
     return (
-        <form onSubmit={handleFormSubmit}>
-            <div className="py-2 flex gap-12">
-                <label htmlFor="email">Email: </label>
+        <form onSubmit={handleFormSubmit} className="space-y-3">
+            <div className="flex items-center gap-2 mb-1">
+                <label htmlFor="email" className="w-20 font-medium">Email: </label>
                 <input
                     type="text"
+                    placeholder=" Your email"
                     id="email"
-                    className="border-1 border-white rounded"
+                    className="w-50 border-1 border-white rounded"
                     name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
-            <div className="pt-2 pb-4 flex gap-4">
-                <label htmlFor="password">Password: </label>
+            <div className="flex items-center gap-2 mb-1">
+                <label htmlFor="password" className="w-20 font-medium">Password: </label>
                 <input
                     type="password"
-                    className="border-1 border-white rounded"
+                    placeholder=" Your password"
+                    className="w-50 border-1 border-white rounded"
                     id="password"
                     name="password"
                     value={password}

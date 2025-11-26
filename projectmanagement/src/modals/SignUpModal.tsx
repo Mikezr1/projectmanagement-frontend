@@ -6,14 +6,20 @@ import { Role } from "../types/models";
 // import type { UserRegistrationData } from "../types/models";
 import CustomModal from "./CustomModal";
 import { useModal } from "./ModalContext";
+import type { AxiosError } from "axios";
 
 interface UserRegistrationData {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  confirmPassword: string;
   role: Role;
   companyName: string;
+}
+
+interface ApiError {
+  error: string;
 }
 
 interface SignUpModalProps {
@@ -34,31 +40,45 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
       lastName: "",
       email: "",
       password: "",
+      confirmPassword: "",
       role: Role.DEVELOPER,
       companyName: "",
     },
   });
+
   const { data: roles, isLoading: loadingTypes } = useQuery({
     queryKey: ["Role"],
     queryFn: userService.getUserTypes,
     enabled: isOpen,
   });
-  const registerMutation = useMutation<void, Error, UserRegistrationData>({
-    mutationFn: (userData) => userService.createUser(userData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["Role"] });
-      hideModal();
-      alert(
-        "Registration completed. You can now log in."
-      );
-      reset();
-    },
-    onError: (error) => {
-      console.error(error); // <- log for debugging
-      alert(`Registration failed: ${error.message}`);
-    },
+
+  const registerMutation = useMutation<
+    void,
+    AxiosError<ApiError>,
+    UserRegistrationData
+    >({
+      mutationFn: (userData) => userService.createUser(userData),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["Role"] });
+        hideModal();
+        alert("Registration completed. You can now log in.");
+        reset();
+      },
+      onError: (error) => {
+        const backendMessage = error.response?.data?.error ?? "Registration failed. Please try again.";
+        alert(backendMessage);
+        console.error("Registration error:", error);
+        // alert(`Registration failed: ${error.message}`);
+      },
   });
+
   const onSubmit: SubmitHandler<UserRegistrationData> = (data) => {
+
+    if (data.password !== data.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
     registerMutation.mutate({
       ...data,
       email: data.email.toLowerCase(),
@@ -78,17 +98,20 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
       size="medium"
       overlayStyle="dark"
     >
-        <form onSubmit={handleSubmit(onSubmit)} className="signup-form">
-          <div className="signup-group">
-            <label htmlFor="firstName"> First Name : </label>
+        {/* <form onSubmit={handleSubmit(onSubmit)} className="signup-form"> */}
+        <form onSubmit={handleSubmit(onSubmit)} className="signup-form space-y-3">
+          {/* <div className="signup-group"> */}
+          <div className="flex items-center gap-2 mb-1">
+            <label htmlFor="firstName" className="w-36 font-medium"> First Name : </label>
             <input
-              {...register("firstName", { required: true })}
-              placeholder="First Name"
+              {...register("firstName", { required: "Field required" })}
+              placeholder=" First Name"
+              className="w-50 border-1 border-white rounded"
             />
             {errors.firstName && <span>{errors.firstName.message}</span>}
           </div>
-          <div className="signup-group">
-            <label htmlFor="lastName"> Last Name : </label>
+          <div className="flex items-center gap-2 mb-1">
+            <label htmlFor="lastName" className="w-36 font-medium"> Last Name : </label>
             <input
               type="text"
               id="lastName"
@@ -96,15 +119,15 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
                 required: "Field required",
                 minLength: { value: 2, message: "minimum of 2 chars" },
               })}
-              placeholder="Last name"
-              className={errors.lastName ? "input error " : ""}
+              placeholder=" Last Name"
+              className="w-50 border-1 border-white rounded"
             />
             {errors.lastName && (
               <span className="error-message">{errors.lastName.message}</span>
             )}
           </div>
-          <div className="signup-group">
-            <label htmlFor="email"> E-mail : </label>
+          <div className="flex items-center gap-2 mb-1">
+            <label htmlFor="email" className="w-36 font-medium"> E-mail : </label>
             <input
               type="text"
               id="email"
@@ -112,27 +135,28 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
                 required: "Field required",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Ongeldig email adres.",
+                  message: "Invalid email address.",
                 },
               })}
-              placeholder="Email"
-              className={errors.email ? "input error " : ""}
+              placeholder=" Email"
+              className="w-50 border-1 border-white rounded"
+              // className={errors.email ? "input error " : ""}
             />
             {errors.email && (
               <span className="error-message">{errors.email.message}</span>
             )}
           </div>
           {/* sign up userType enum! */}
-          <div className="form-group">
-            <label htmlFor="role">Role :</label>
+          <div className="flex items-center gap-2 mb-1">
+            <label htmlFor="role" className="w-36 font-medium">Role :</label>
             <select
               id="role"
               {...register("role", {
                 required: "Select a Role",
               })}
-              className="bg-black text-white border border-gray-700 rounded px-3 py-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="bg-black text-white w-50 border-1 border-white rounded"
             >
-              <option value="">Select a Role</option>
+              <option value=""> Select a Role</option>
               {roles && roles.length > 0 ? (
                 roles.map((type) => (
                   <option key={type} value={type}>
@@ -142,7 +166,7 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
                   </option>
                 ))
               ) : (
-                <option disabled>No roles available</option>
+                <option disabled> No roles available</option>
               )}
             </select>
             {errors.role && (
@@ -150,8 +174,8 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
             )}
           </div>
           {/* company name */}
-          <div className="signup-group">
-            <label htmlFor="companyName"> Company name : </label>
+          <div className="flex items-center gap-2 mb-1">
+            <label htmlFor="companyName" className="w-36 font-medium"> Company name : </label>
             <input
               type="text"
               id="companyName"
@@ -159,8 +183,9 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
                 required: "Field required",
                 minLength: { value: 2, message: "minimum of 2 chars" },
               })}
-              placeholder="Company Name"
-              className={errors.companyName ? "input error" : ""}
+              placeholder=" Company Name"
+              className="w-50 border-1 border-white rounded"
+              // className={errors.companyName ? "input error" : ""}
             />
             {errors.companyName && (
               <span className="error-messsage">
@@ -169,8 +194,8 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
             )}
           </div>
           {/* Password section */}
-          <div className="signup-group">
-            <label htmlFor="password"> Password : </label>
+          <div className="flex items-center gap-2 mb-1">
+            <label htmlFor="password" className="w-36 font-medium"> Password : </label>
             <input
               type="password"
               id="password"
@@ -178,24 +203,29 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
                 required: "Field required",
                 minLength: { value: 6, message: "minimum of 6 chars" },
               })}
-              placeholder="Password"
-              className={errors.password ? "input error " : ""}
+              placeholder=" Password"
+              className="w-50 border-1 border-white rounded"
+              // className={errors.password ? "input error " : ""}
             />
             {errors.password && (
               <span className="error-message">{errors.password.message}</span>
             )}
           </div>
-          {/* <div className='signup-group'>
-<label htmlFor="confirmPassword"> Confirm Password : </label>
-<input type="password" id='confirmPassword' {...register("confirmPassword", {
-                          required: "Veld Verplicht",
-                          validate: (value) => value === password || "Passwords do not match"
-                      })}
-                      placeholder='Confirm Password'
-                      className={errors.confirmPassword ? 'input error ' : ""}
-                      />
-                      {errors.confirmPassword && <span className='error-message'>{errors.confirmPassword.message}</span>}
-</div> */}
+          <div className="flex items-center gap-2 mb-1">
+            <label htmlFor="confirmPassword" className="w-36 font-medium"> Confirm Password : </label>
+            <input
+              type="password"
+              id='confirmPassword'
+              {...register("confirmPassword", {
+                required: "Field required",
+                // validate: (value) => value === password || "Passwords do not match"
+              })}
+                placeholder=' Confirm Password'
+                className="w-50 border-1 border-white rounded"
+                // className={errors.confirmPassword ? 'input error ' : ""}
+             />
+             {errors.confirmPassword && <span className='error-message'>{errors.confirmPassword.message}</span>}
+            </div>
           {/* submit button */}
           <button type="submit" className="pr-2 mr-2 border-1 text-white p-2 rounded bg-black hover:bg-gray-200 hover:text-black">
             Sign Up

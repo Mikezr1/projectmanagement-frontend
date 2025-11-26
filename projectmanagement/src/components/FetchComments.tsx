@@ -8,7 +8,7 @@ export default function FetchComments() {
             queryKey: ['comments'],
             queryFn: commentService.getAllComments
         })
-    
+        console.log(comments);
         if (isLoading) return <div>Loading</div>
         if (isError) return <div>Error: { error?.message }</div>
 
@@ -17,7 +17,7 @@ export default function FetchComments() {
             {comments?.map(comment => (
                 <div key={comment.id} className="p-4 bg-grey-800 rounded shadow">
                     <div>
-                        {comment.user?.firstName || "Unknown"}
+                        {comment.user ? `${comment.user.firstName} ${comment.user.lastName}` : "Unknown"}
                     </div>
                     <div>
                         {comment.description || "No Description"}

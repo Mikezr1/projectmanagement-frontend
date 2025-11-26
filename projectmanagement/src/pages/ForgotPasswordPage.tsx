@@ -14,10 +14,15 @@ const ForgotPasswordPage = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (!newPassword || !confirmPassword) {
+            return;
+        }
+
         try {
             await userService.resetPassword(email, newPassword, confirmPassword);
             alert("Password updated!");
-            navigate("/login");
+            hideModal();
+            navigate("/");
         } catch (error: any) {
             alert(error.response?.data || error.message);
         }

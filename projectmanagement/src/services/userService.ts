@@ -60,7 +60,7 @@ const resetPassword = async (
   confirmPassword: string
 ) => {
   const response = await axiosClient.post("/forgot-password", {
-    email,
+    email: email.trim().toLowerCase(),
     newPassword,
     confirmPassword,
   });

@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import type { CommentCreateDTO } from "../types/models";
 import API_URL from "../services/commentService";
-import useStore from "../components/useStore";
 import commentService from "../services/commentService";
+import { useAuthStore } from "../stores/authStore";
 
 interface CommentCreate {
     setComment: (id: number) => void;
@@ -13,7 +13,7 @@ interface CommentCreate {
 
 const CommentCreate = ({ setComment, projectId }: CommentCreate) => {
 
-    const user = useStore();
+    const { user } = useAuthStore();
     const [comment, setState] = useState({ content: '', description: '', taskId: 0, userId: user.id })
     const queryClient = useQueryClient();
 

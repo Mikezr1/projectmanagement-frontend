@@ -39,6 +39,11 @@ const getProjectsByUserId = async (userId: number) => {
     return response.data;
 };
 
+const getUserIdsByProjectId = async(projectId: number) => {
+    const response = await axios.get(`${API_BASE_PROJECT}/${projectId}/members`);
+    return response.data;
+}
+
 const getTasksByProjectId = async (id) => {
     const response = await axios.get(`${API_BASE_PROJECT}/${id}/tasks`);
     return response.data;
@@ -76,6 +81,7 @@ export default {
     addMembers,
     getAllProjects,
     getProjectsByUserId,
+    getUserIdsByProjectId,
     getTasksByProjectId,
     getProject,
     updateProject,
