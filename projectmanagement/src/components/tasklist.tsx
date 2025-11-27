@@ -60,7 +60,7 @@ const Tasklist = ({ projectId }: TasklistProps) => {
                             <td className="hover:underline p-2 border-r border-orange-600" onClick={() => handleToDetail(task.id)}>
                                 {task.title}
                             </td>
-                            <td className="p-2 border-r border-orange-600">{task.user?.firstName ?? "No user"}</td>
+                            {/* <td className="p-2 border-r border-orange-600">{task.user?.firstName ?? "No user"}</td> */}
                             <td className="p-2 border-r border-orange-600">{task.user ? `${task.user.firstName} ${task.user.lastName}` : "No user"}</td>
 
                             <td className="p-2 border-r border-orange-600">

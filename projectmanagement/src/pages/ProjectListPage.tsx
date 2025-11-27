@@ -58,8 +58,8 @@ const ProjectListPage = () => {
                         <span className="text-white">
                             Hi, {user.firstName} {user.lastName}
                         </span>
-                        <span className="bg-gray-800 rounded text-white px-2 py-1 ml-2 text-sm inline-block flex items-center">
-                        {user.role.toLowerCase()}
+                        <span className="bg-gray-800 rounded text-white px-2 py-1 ml-2 text-sm inline-block flex items-center capitalize">
+                        {user.role.toLowerCase().replace("_", " ")}
                         </span>
                         <button
                             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition flex items-center"
